@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { PackageCheck, ShieldCheck, Sparkles, Trash2, type LucideIcon } from "lucide-react";
 import { CtaBand } from "@/components/blocks/CtaBand";
 import { DoctorCard } from "@/components/blocks/DoctorCard";
 import { TrustBar } from "@/components/blocks/TrustBar";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -9,11 +11,25 @@ import { about } from "@/content/about";
 import { clinic } from "@/content/clinic";
 import { cta } from "@/content/cta";
 import { doctors } from "@/content/doctors";
+import { seo } from "@/content/seo";
+import { personJsonLd } from "@/lib/jsonld";
 
 // /about — clinic story, full doctor bios, sterilisation & safety, facility
 // photos, trust stats, CTA band (SPEC §7.4).
 
 const sterilisationIcons: LucideIcon[] = [ShieldCheck, PackageCheck, Sparkles, Trash2];
+
+export const metadata: Metadata = {
+  title: seo.about.title,
+  description: seo.about.description,
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: seo.about.title,
+    description: seo.about.description,
+    url: "/about",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default function AboutPage() {
   return (
@@ -38,6 +54,9 @@ export default function AboutPage() {
       <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Our team" title="The doctors who treat you" />
+          {doctors.map((doctor) => (
+            <JsonLd key={doctor.slug} data={personJsonLd(doctor)} />
+          ))}
           <div className="reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {doctors.map((doctor) => (
               <DoctorCard key={doctor.slug} doctor={doctor} variant="full" />

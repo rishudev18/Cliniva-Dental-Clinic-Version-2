@@ -3,14 +3,17 @@ import { MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { clinic } from "@/content/clinic";
+import { seo } from "@/content/seo";
 import { thankYou } from "@/content/thankYou";
 import { whatsappUrl } from "@/lib/utils";
 
-// /thank-you — post-submission confirmation (SPEC §7.8). noindex per spec;
-// the rest of the SEO layer (unique title/description, openGraph, etc.) is
-// built out fully in Step 11, but robots:noindex is called out specifically
-// here so this page never accidentally gets indexed in the meantime.
+// /thank-you — post-submission confirmation (SPEC §7.8). noindex per spec
+// (also excluded in app/robots.ts) since it has nothing for a search result
+// to usefully land on, but still gets a real title/description — it's a
+// real page a signed-in tab or browser history entry can show.
 export const metadata: Metadata = {
+  title: seo.thankYou.title,
+  description: seo.thankYou.description,
   robots: { index: false, follow: false },
 };
 

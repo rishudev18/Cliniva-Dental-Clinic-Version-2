@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbListJsonLd, type Crumb } from "@/lib/jsonld";
 
 // Server Component. On all pages except `/` (§6). Renders the visible trail
@@ -10,10 +11,7 @@ type BreadcrumbsProps = { items: Crumb[] };
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: breadcrumbListJsonLd(items) }}
-      />
+      <JsonLd data={breadcrumbListJsonLd(items)} />
       <ol className="flex flex-wrap items-center gap-1 text-sm text-graphite">
         {items.map((item, i) => {
           const last = i === items.length - 1;

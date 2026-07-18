@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Placeholder mark (§13 logo TODO) — initials on a scrub square, same
+       labelled-placeholder pattern used for doctor portraits until a real
+       logo exists. Uses only the §5.1 tokens: scrub, enamel, clinic. -->
+  <rect width="32" height="32" rx="8" fill="#0B2B3C" />
+  <circle cx="24" cy="8" r="3" fill="#1C7BA8" />
+  <text
+    x="13"
+    y="22"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="17"
+    font-weight="600"
+    fill="#FFFFFF"
+    text-anchor="middle"
+  >C</text>
+</svg>

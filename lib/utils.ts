@@ -40,7 +40,7 @@ export function cardGridCols(count: number): string {
   return "sm:grid-cols-2 lg:grid-cols-3";
 }
 
-const WEEK_MON_FIRST = [
+export const WEEK_MON_FIRST = [
   "Monday",
   "Tuesday",
   "Wednesday",

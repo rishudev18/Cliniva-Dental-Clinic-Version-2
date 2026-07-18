@@ -1,15 +1,18 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 import { CtaBand } from "@/components/blocks/CtaBand";
 import { FaqAccordion } from "@/components/blocks/FaqAccordion";
 import { IncludedExtra } from "@/components/blocks/IncludedExtra";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { clinic } from "@/content/clinic";
 import { cta } from "@/content/cta";
-import { getService, services } from "@/content/services";
+import { getService, services, type Service } from "@/content/services";
+import { faqPageJsonLd, medicalProcedureJsonLd } from "@/lib/jsonld";
 import { cardGridCols, cn, formatINRRange } from "@/lib/utils";
 
 // /services/[slug] — treatment detail (SPEC §7.3). Statically generated for
@@ -17,6 +20,59 @@ import { cardGridCols, cn, formatINRRange } from "@/lib/utils";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
+}
+
+// Title pattern is "⟨Service⟩ in ⟨Locality⟩ | ⟨Clinic Name⟩", 50–60 chars
+// (§9.2) — service names vary from 8 to 23 chars, so this falls back to
+// the shorter `shortName` when the full name would push past 60, and adds
+// the city when a short name (e.g. "Dentures") would land under 50.
+function buildTitle(service: Service): string {
+  const { locality, city } = clinic.address;
+  let name = service.name;
+  let title = `${name} in ${locality} | ${clinic.name}`;
+  if (title.length > 60) {
+    name = service.shortName;
+    title = `${name} in ${locality} | ${clinic.name}`;
+  }
+  if (title.length < 50) {
+    title = `${name} in ${locality}, ${city} | ${clinic.name}`;
+  }
+  return title;
+}
+
+// Descriptions must land in 140–160 chars (§9.2); oneLiner length varies
+// enough per service that the short base suffix sometimes isn't enough.
+function buildDescription(service: Service): string {
+  const { locality, city } = clinic.address;
+  let desc = `${service.oneLiner} See cost and details at ${clinic.name}, ${locality}, ${city}.`;
+  if (desc.length < 140) {
+    desc = `${service.oneLiner} See the full cost and what is involved at ${clinic.name} in ${locality}, ${city}.`;
+  }
+  return desc;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const service = getService(slug);
+  if (!service) return {};
+
+  const title = buildTitle(service);
+  const description = buildDescription(service);
+  return {
+    title,
+    description,
+    alternates: { canonical: `/services/${service.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `/services/${service.slug}`,
+      images: ["/opengraph-image"],
+    },
+  };
 }
 
 function FactItem({ label, value }: { label: string; value: string }) {
@@ -45,6 +101,9 @@ export default async function ServiceDetail({
 
   return (
     <main>
+      <JsonLd data={medicalProcedureJsonLd(service)} />
+      <JsonLd data={faqPageJsonLd(service.faqs)} />
+
       {/* 1 — Breadcrumb + h1 + oneLiner */}
       <section className="py-12 md:py-16">
         <Container>

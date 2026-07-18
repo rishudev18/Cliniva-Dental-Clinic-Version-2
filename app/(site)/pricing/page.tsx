@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { CostClarityTable } from "@/components/blocks/CostClarityTable";
 import { CtaBand } from "@/components/blocks/CtaBand";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -5,12 +6,25 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cta } from "@/content/cta";
 import { pricing } from "@/content/pricing";
+import { seo } from "@/content/seo";
 
 // /pricing — the signature page (SPEC §7.5). CostClarityTable's `full`
 // variant already renders the 2-paragraph honest intro above the table and
 // the What's included / What costs extra columns below it — see
 // components/blocks/CostClarityTable.tsx — so this page adds only the
 // payment, insurance, and no-upselling notes that belong to it alone.
+
+export const metadata: Metadata = {
+  title: seo.pricing.title,
+  description: seo.pricing.description,
+  alternates: { canonical: "/pricing" },
+  openGraph: {
+    title: seo.pricing.title,
+    description: seo.pricing.description,
+    url: "/pricing",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default function PricingPage() {
   return (

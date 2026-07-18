@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,6 +16,7 @@ import { MapEmbed } from "@/components/blocks/MapEmbed";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
 import { TestimonialCard } from "@/components/blocks/TestimonialCard";
 import { TrustBar } from "@/components/blocks/TrustBar";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -25,9 +27,25 @@ import { doctors } from "@/content/doctors";
 import { faqs } from "@/content/faqs";
 import { home } from "@/content/home";
 import { pricing } from "@/content/pricing";
+import { seo } from "@/content/seo";
 import { primaryServices } from "@/content/services";
 import { testimonials } from "@/content/testimonials";
+import { faqPageJsonLd } from "@/lib/jsonld";
 import { whatsappUrl } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  title: seo.home.title,
+  description: seo.home.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: seo.home.title,
+    description: seo.home.description,
+    url: "/",
+    images: ["/opengraph-image"],
+  },
+};
+
+const homeFaqs = faqs.slice(0, 6);
 
 // Home page (SPEC §7.1) — all 10 sections in order. Every heading and card
 // grid picks up the CSS-only §5.4 scroll-reveal (via SectionHeading, or a
@@ -209,8 +227,9 @@ export default function Home() {
       <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Questions" title="Frequently asked questions" />
+          <JsonLd data={faqPageJsonLd(homeFaqs)} />
           <div className="mt-10">
-            <FaqAccordion items={faqs.slice(0, 6)} idPrefix="home-faq" />
+            <FaqAccordion items={homeFaqs} idPrefix="home-faq" />
           </div>
           <p className="mt-6 text-sm text-graphite">
             Didn&rsquo;t find your answer?{" "}

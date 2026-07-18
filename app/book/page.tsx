@@ -1,12 +1,26 @@
+import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { Container } from "@/components/ui/Container";
 import { book } from "@/content/book";
 import { clinic } from "@/content/clinic";
+import { seo } from "@/content/seo";
 import { whatsappUrl } from "@/lib/utils";
 
 // /book — dedicated appointment request page (SPEC §7.7). Minimal chrome
 // from app/book/layout.tsx; this page is just the centred form.
+
+export const metadata: Metadata = {
+  title: seo.book.title,
+  description: seo.book.description,
+  alternates: { canonical: "/book" },
+  openGraph: {
+    title: seo.book.title,
+    description: seo.book.description,
+    url: "/book",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default async function BookPage({
   searchParams,

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { CostClarityTable } from "@/components/blocks/CostClarityTable";
 import { ServiceCard } from "@/components/blocks/ServiceCard";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -6,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { clinic } from "@/content/clinic";
 import { pricing } from "@/content/pricing";
+import { seo } from "@/content/seo";
 import { categoryLabels, categoryOrder, services } from "@/content/services";
 import { servicesIndex } from "@/content/servicesIndex";
 import { cardGridCols, cn } from "@/lib/utils";
@@ -13,6 +15,18 @@ import { cardGridCols, cn } from "@/lib/utils";
 // /services — index (SPEC §7.2). Services grouped by category, with the
 // "Not sure what you need?" band between the general and cosmetic groups,
 // and the condensed Cost Clarity Table near the bottom.
+
+export const metadata: Metadata = {
+  title: seo.services.title,
+  description: seo.services.description,
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: seo.services.title,
+    description: seo.services.description,
+    url: "/services",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default function ServicesIndex() {
   const groups = categoryOrder
@@ -35,6 +49,7 @@ export default function ServicesIndex() {
 
       <section className="pb-16 md:pb-24">
         <Container className="space-y-16">
+          <SectionHeading title="All treatments" className="mb-2" />
           {groups.map((group, i) => (
             <div key={group.category}>
               <p className="font-mono text-eyebrow uppercase text-graphite">{group.label}</p>

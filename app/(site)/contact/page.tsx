@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 import { AppointmentForm } from "@/components/forms/AppointmentForm";
 import { MapEmbed } from "@/components/blocks/MapEmbed";
@@ -7,9 +8,22 @@ import { Chip } from "@/components/ui/Chip";
 import { Container } from "@/components/ui/Container";
 import { clinic } from "@/content/clinic";
 import { contact } from "@/content/contact";
+import { seo } from "@/content/seo";
 import { cn, isTodayRow, whatsappUrl } from "@/lib/utils";
 
 // /contact — two-column: form left, address/hours/map right (SPEC §7.6).
+
+export const metadata: Metadata = {
+  title: seo.contact.title,
+  description: seo.contact.description,
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: seo.contact.title,
+    description: seo.contact.description,
+    url: "/contact",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default function ContactPage() {
   const { address } = clinic;
