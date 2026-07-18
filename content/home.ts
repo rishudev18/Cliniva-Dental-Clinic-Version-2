@@ -12,11 +12,12 @@ export const home = {
     // Benefit statement, not the clinic name (§7.1).
     headline: "Transform your smile. Transform your confidence.",
     lead: "Four specialist doctors, sterilised instruments opened in front of you, and a written price range before any treatment starts. Same-day appointments for pain, seven days a week.",
-    microTrust: ["Same-day appointments", "Digital X-ray", "Sterilised, sealed instruments"] as [
-      string,
-      string,
-      string,
-    ],
+    // The rating item (e.g. "4.8★ (240+ Google reviews)") isn't listed here —
+    // it's built in page.tsx from clinic.googleRating, the same source the
+    // Testimonials section reads from, so the two numbers can't drift out
+    // of sync. Sterilisation was dropped from this row: it's already the
+    // TrustBar stat directly below the hero.
+    microTrust: ["Same-day appointments", "Digital X-ray"] as [string, string],
   },
   // §7.1 section 2, added post-launch. Eyebrow ("About us") and the h2
   // template (locality-interpolated) are structural/spec-fixed and stay

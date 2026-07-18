@@ -101,7 +101,10 @@ export default function Home() {
             </div>
 
             <p className="mt-8 font-mono text-sm text-graphite">
-              {home.hero.microTrust.join(" · ")}
+              {[
+                `${clinic.googleRating.value}★ (${clinic.googleRating.count}+ Google reviews)`,
+                ...home.hero.microTrust,
+              ].join(" · ")}
             </p>
           </div>
 

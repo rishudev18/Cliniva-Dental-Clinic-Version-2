@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-8 (Home page §7.1 section 2: About us teaser + reorder)
+9 (Hero micro-trust row update)
 
 ## Current step
-About us teaser section built, then reordered ahead of TrustBar per client request; spec updated to match — site otherwise unchanged since Step 14
+Hero micro-trust row updated to lead with the Google rating, sourced from clinic.googleRating — site otherwise unchanged since Session 8
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -17,6 +17,7 @@ About us teaser section built, then reordered ahead of TrustBar per client reque
 - [x] Session 6 — Nav revision: restructured nav, /smile-gallery, content/gallery.ts (Step 14) — completed 2026-07-19
 - [x] Session 7 — Hero headline copy change — completed 2026-07-19
 - [x] Session 8 — Home page About us teaser + section reorder — completed 2026-07-19
+- [x] Session 9 — Hero micro-trust row update — completed 2026-07-19
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -235,5 +236,12 @@ Append one entry per completed step. Never delete old entries — this file is t
   - The reorder is itself a deviation from what was originally spec'd (and already built and verified) for section 2/3 order — done on direct client instruction after seeing the built page, and immediately reflected back into SPEC.md so the two don't drift; not a case of building something un-spec'd, since the spec was corrected same-session.
   - Every section background from TrustBar onward was re-checked and re-assigned after both changes (once for the insertion, once again for the reorder) rather than just patching the two moved sections in isolation, per §7.1's explicit note that inserting/reordering shifts the whole alternating `porcelain`/`enamel` sequence.
 - Verified: `npx tsc --noEmit` clean after both the insertion and the reorder. Live in-browser checks (this session's dev server) after the final reorder: programmatic walk of all 11 `<main>` children confirmed the order Hero → TrustBar → About us → Services → Why this clinic → Cost Clarity → Meet the team → Testimonials → FAQ → CTA band → Location strip, with backgrounds `porcelain, enamel, porcelain, enamel, porcelain, enamel, porcelain, enamel, porcelain, scrub, enamel` — no two adjacent sections identical anywhere in the sequence. About us section content confirmed rendering exactly as authored (eyebrow, h2 with interpolated locality, body, quick-facts row, `Learn more about us` link resolving to `/about`) and its two-column markup matches the hero's own classes (`md:w-3/5`/`md:w-2/5`, `flex flex-col md:flex-row`). At 375px: no horizontal overflow, photo stacks below text, photo height exactly 280px — same as the hero's own mobile treatment. Separately investigated a Next.js dev-overlay hydration warning the user encountered (`cz-shortcut-listen="true"` attribute mismatch on `<body>`) — reproduced the "Learn more about us" click in this session's browser with a clean console both before and after navigation, confirming the warning is caused by the ColorZilla browser extension injecting that attribute pre-hydration (an environment artifact, not a code defect); no code change was made for it.
-- Commit: (combined with this entry — see git log)
+- Commit: Home page: About us teaser section + reorder ahead of TrustBar
 - Open questions for next session: none from this change. Confirm with the client whether the Hero → TrustBar → About us order is final, since it now deviates from every prior build-order document's original sequencing convention; if it changes again, both `page.tsx`'s background classes and SPEC.md §7.1 need the same re-check treatment.
+
+### Hero micro-trust row update — 2026-07-19
+- What was built: the hero's mono micro-trust row (§7.1 section 1) changed from `Same-day appointments · Digital X-ray · Sterilised, sealed instruments` to `4.8★ (240+ Google reviews) · Same-day appointments · Digital X-ray`, per direct instruction. `content/home.ts`'s `hero.microTrust` narrowed from a 3-tuple to a 2-tuple holding just `["Same-day appointments", "Digital X-ray"]` — the sterilisation item was dropped, since it's already the TrustBar stat directly below the hero. The rating item isn't stored in content at all: `app/(site)/page.tsx` builds it inline as `` `${clinic.googleRating.value}★ (${clinic.googleRating.count}+ Google reviews)` `` and prepends it to `home.hero.microTrust` before joining with " · " — the exact same `clinic.googleRating` field the Testimonials section already reads (`clinic.googleRating.value`/`.count`/`.url`), so the two can't drift out of sync.
+- Decisions made / deviations from SPEC.md (and why): none — a content/render change using an existing shared data field, no new content-file field needed since the value is fully derived.
+- Verified: `npx tsc --noEmit` clean. Live check on this session's dev server: raw page text confirmed the row reads `4.8★ (240+ Google reviews) · Same-day appointments · Digital X-ray` directly below the hero CTAs. At 375px, wrap measured via the DOM Range API (same method used for the earlier headline check, since this sandbox's screenshot tool is unreliable): the row wraps to 2 lines at a clean word boundary (`"...Same-day "` / `"appointments · Digital X-ray"`), no mid-word break, no horizontal overflow (`body.scrollWidth === body.clientWidth`).
+- Commit: Hero micro-trust row update: content/home.ts, page.tsx
+- Open questions for next session: none from this change.
