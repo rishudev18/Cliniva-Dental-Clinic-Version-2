@@ -86,7 +86,8 @@ All page content — headings, service copy, doctor bios, testimonials, pricing,
 | `/services` | Index of all treatments | P0 |
 | `/services/[slug]` | Individual treatment detail page | P0 |
 | `/about` | Clinic story, doctor profiles, credentials, facility | P0 |
-| `/pricing` | Transparent treatment cost ranges | P0 |
+| `/smile-gallery` | Before/after treatment photos of consenting patients | P0 |
+| `/pricing` | Transparent treatment cost ranges (not in top nav — reachable via footer, CTA bands, service pages) | P0 |
 | `/contact` | Address, map, hours, directions, form | P0 |
 | `/book` | Dedicated appointment request page | P0 |
 | `/thank-you` | Post-submission confirmation | P0 |
@@ -96,14 +97,17 @@ All page content — headings, service copy, doctor bios, testimonials, pricing,
 Reserved but **not built in v1**: `/articles`, `/articles/[slug]`.
 
 ### 3.2 Navigation
-**Header (desktop):** Logo · Services (dropdown, lists 6 primary treatments) · Pricing · About · Contact · `Book Appointment` (primary button)
 
-**Header (mobile):** Logo · phone icon (tel: link) · hamburger → full-screen overlay menu
+**Revision note (post-launch change, applied after Steps 1–13 were built):** nav restructured per client feedback. Order changed to lead with About before Services, Pricing removed from the top-level nav (page still exists, still linked from footer/CTA bands/service pages), and a new Smile Gallery item added.
+
+**Header (desktop):** Logo · Home · About · Services (dropdown, lists 6 primary treatments) · Smile Gallery · Contact · `Book Appointment` (primary button)
+
+**Header (mobile):** Logo · phone icon (tel: link) · hamburger → full-screen overlay menu, same item order as desktop
 
 **Footer (4 columns, stacks to 1 on mobile):**
 1. Clinic name, one-line positioning statement, address, `Get Directions` link
 2. Treatments (links to 6 service pages)
-3. Clinic — About, Pricing, Contact, Privacy
+3. Clinic — About, Smile Gallery, Pricing, Contact, Privacy
 4. Hours table + phone + WhatsApp + email
 
 Footer bottom bar: `© ⟨year⟩ ⟨Clinic Name⟩ · Website by ⟨Your Name⟩` with a `rel="nofollow"` link to your site.
@@ -189,7 +193,20 @@ type Doctor = {
 ### 4.5 `/content/faqs.ts`
 10 general FAQs. Must include, at minimum: cost of a consultation, whether treatment is painful, insurance/cashless, first-visit expectations, emergency availability, sterilisation and hygiene protocol, EMI availability, walk-in vs appointment.
 
-### 4.6 `/content/trust.ts`
+### 4.6 `/content/gallery.ts` *(added in nav revision)*
+```ts
+type GalleryEntry = {
+  id: string,
+  treatmentSlug: string,         // links back to services.ts entry
+  beforeImage: string,
+  afterImage: string,
+  caption: string,               // no patient name unless separately consented to be named
+  consentObtained: boolean,      // MUST be true before an entry renders publicly
+}
+```
+**Hard rule: filter this array to `consentObtained === true` at render time, in code, not by only remembering to leave unconsented entries out of the data file.** This is a compliance requirement, not a style preference — the render logic must not be able to show an entry that hasn't been explicitly marked consented, even if one is accidentally added to the data file later.
+
+### 4.7 `/content/trust.ts`
 ```ts
 { stat: string, label: string }[]   // exactly 4
 ```
@@ -350,6 +367,15 @@ Statically generated via `generateStaticParams`. Sections:
 
 ### 7.4 `/about`
 Clinic story (2–3 paragraphs, mentions founding year and locality) → **Our team** section, all 4 doctors as full `DoctorCard` + expanded bio each, in a grid that stays legible at 4-across on desktop and stacks to 1-across on mobile (order: Dr. Amit Chawla, Dr. Sthitodhi Mukherjee, Dr. Amandeep Singh, Dr. Rishabh Mishra) → **Sterilisation & safety** section (this matters more than it looks: itemise autoclave protocol, single-use items, disposal — in plain language) → facility photo grid (6 images, no lightbox, just a responsive grid) → trust stats → CTA band.
+
+### 7.4a `/smile-gallery` *(added in nav revision)*
+- Breadcrumb, h1 `Real smiles from ⟨Locality⟩ patients`, one honest lead paragraph noting these are real patients who agreed to share their results.
+- Grid of before/after pairs, sourced from `content/gallery.ts`, **filtered to `consentObtained === true` only** — this filter happens in the page/component code, not just by data hygiene.
+- Each pair: side-by-side (or slider-free stacked on mobile — no JS-heavy before/after slider widget, keep this a Server Component like everything else) before/after images, treatment name (linked to that service's detail page), and the caption.
+- Optionally group by `treatmentSlug` category, same category labels as `/services`.
+- If zero entries currently have `consentObtained: true`, the page must still render cleanly with an honest empty state (e.g. "We're currently gathering patient consent for this gallery — check back soon, or ask us in person about specific results.") rather than a broken or blank layout.
+- CTA band at the bottom, same pattern as other pages.
+- Add to sitemap, add standard metadata, add to `Breadcrumbs`.
 
 ### 7.5 `/pricing`
 The signature page. h1 `Treatment costs, listed plainly`. An honest 2-paragraph intro on why prices are ranges. Full `CostClarityTable`. Then: **What's included** / **What costs extra** columns · payment methods and EMI note · insurance and cashless note · a short "no upselling" commitment paragraph · CTA band.

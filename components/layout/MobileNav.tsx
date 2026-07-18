@@ -12,9 +12,10 @@ import { clinic } from "@/content/clinic";
 import { primaryServices } from "@/content/services";
 
 const mainLinks = [
-  { href: "/services", label: "Services" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/smile-gallery", label: "Smile Gallery" },
   { href: "/contact", label: "Contact" },
 ];
 

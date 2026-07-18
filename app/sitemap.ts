@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/`, lastModified, priority: 1 },
     { url: `${siteUrl}/services`, lastModified, priority: 0.9 },
     { url: `${siteUrl}/about`, lastModified, priority: 0.7 },
+    { url: `${siteUrl}/smile-gallery`, lastModified, priority: 0.6 },
     { url: `${siteUrl}/pricing`, lastModified, priority: 0.9 },
     { url: `${siteUrl}/contact`, lastModified, priority: 0.7 },
     { url: `${siteUrl}/book`, lastModified, priority: 0.8 },

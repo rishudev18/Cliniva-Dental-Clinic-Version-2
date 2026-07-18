@@ -22,6 +22,11 @@ export const seo = {
     description:
       "Meet the four dentists at Clivia Dental Clinic in DLF Phase 2, Gurugram, read our sterilisation protocol, and see inside the clinic before you book a visit.",
   },
+  smileGallery: {
+    title: "Smile Gallery in DLF Phase 2 | Clivia Dental Clinic",
+    description:
+      "Real before-and-after results from consenting patients at Clivia Dental Clinic in DLF Phase 2, Gurugram, across treatments like whitening, braces and crowns.",
+  },
   pricing: {
     title: "Treatment Costs in DLF Phase 2 | Clivia Dental Clinic",
     description:

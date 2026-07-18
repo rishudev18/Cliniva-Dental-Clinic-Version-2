@@ -24,8 +24,20 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav — §3.2 (nav revision): Home · About · Services (dropdown) · Smile Gallery · Contact */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          <Link
+            href="/"
+            className="rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className="rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+          >
+            About
+          </Link>
           <div className="group relative">
             <Link
               href="/services"
@@ -61,8 +73,7 @@ export function Header() {
             </div>
           </div>
           {[
-            { href: "/pricing", label: "Pricing" },
-            { href: "/about", label: "About" },
+            { href: "/smile-gallery", label: "Smile Gallery" },
             { href: "/contact", label: "Contact" },
           ].map((link) => (
             <Link

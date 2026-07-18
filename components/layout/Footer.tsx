@@ -55,6 +55,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5">
             {[
               { href: "/about", label: "About" },
+              { href: "/smile-gallery", label: "Smile Gallery" },
               { href: "/pricing", label: "Pricing" },
               { href: "/contact", label: "Contact" },
               { href: "/privacy", label: "Privacy" },
