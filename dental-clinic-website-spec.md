@@ -327,23 +327,27 @@ Sections in exact order:
    - Mobile: stacks, image below CTAs, image height capped at 280px.
    - **This is the LCP element. Image must be `priority`. No animation on hero load beyond a 400ms fade.**
 
-2. **TrustBar** — 4 stats from `/content/trust.ts`.
+2. **TrustBar** — 4 stats from `/content/trust.ts`. *(Reordered ahead of the About us teaser per a follow-up client request — originally specified as section 3, after About us.)*
 
-3. **Services** — Eyebrow `Treatments`, h2, 6 `ServiceCard`s in a 1/2/3 column grid. Below: text link `View all treatments →`.
+3. **About us (teaser)** *(added post-launch, client request)* — Text + photo, mirroring the hero's layout pattern (text left ~60%, photo right ~40% on desktop; stacks on mobile with photo below text, same 280px mobile height cap as the hero). Eyebrow `About us`, h2 `Specialist dental care in ⟨Locality⟩`, 2–3 sentence body covering founding year and the 4-specialist team, a row of 2–3 quick facts in mono (e.g. `Est. ⟨year⟩` · `4 specialist dentists` · `Digital X-ray on site`), and a `Learn more about us →` link to `/about`. Content lives in `content/home.ts` (new `aboutTeaser` field), not a new content file. Photo: labelled placeholder until supplied, same as the hero image. **No new component required** — build with existing `SectionHeading`, `Container`, and `Button` primitives; this does not need its own dedicated block component.
 
-4. **Why this clinic** — 4 differentiator blocks, 2×2 grid. Each: lucide icon in `rinse` circle, h3, two-sentence body. Content angles: sterilisation protocol, technology (digital X-ray / intraoral camera), transparent pricing, single-doctor continuity of care.
+4. **Services** — Eyebrow `Treatments`, h2, 6 `ServiceCard`s in a 1/2/3 column grid. Below: text link `View all treatments →`.
 
-5. **Cost Clarity** (condensed) — h2 `What treatment actually costs`, one honest paragraph, `CostClarityTable variant="condensed"` showing the 6 primary treatments, then `See full price list →`.
+5. **Why this clinic** — 4 differentiator blocks, 2×2 grid. Each: lucide icon in `rinse` circle, h3, two-sentence body. Content angles: sterilisation protocol, technology (digital X-ray / intraoral camera), transparent pricing, single-doctor continuity of care.
 
-6. **Meet the team** — h2, one-line intro, then a row of 4 compact `DoctorCard`s (photo, name in Newsreader, qualifications + registration number in mono, primary speciality chip). `More about our doctors →` links to `/about`.
+6. **Cost Clarity** (condensed) — h2 `What treatment actually costs`, one honest paragraph, `CostClarityTable variant="condensed"` showing the 6 primary treatments, then `See full price list →`.
 
-7. **Testimonials** — h2, 3 cards on desktop / horizontal scroll-snap on mobile, plus the aggregate Google rating with a link to the Google reviews page.
+7. **Meet the team** — h2, one-line intro, then a row of 4 compact `DoctorCard`s (photo, name in Newsreader, qualifications + registration number in mono, primary speciality chip). `More about our doctors →` links to `/about`.
 
-8. **FAQ** — 6 questions from `/content/faqs.ts` via `FaqAccordion`. Link to `/contact` for anything unanswered.
+8. **Testimonials** — h2, 3 cards on desktop / horizontal scroll-snap on mobile, plus the aggregate Google rating with a link to the Google reviews page.
 
-9. **Booking CTA band** — Full-width `scrub` background. h2 in `enamel`, one line of copy, three actions: `Book Appointment`, `Call ⟨phone⟩`, `WhatsApp`. Below in mono: today's hours + emergency note.
+9. **FAQ** — 6 questions from `/content/faqs.ts` via `FaqAccordion`. Link to `/contact` for anything unanswered.
 
-10. **Location strip** — `MapEmbed` left, address + hours table + `Get Directions` right.
+10. **Booking CTA band** — Full-width `scrub` background. h2 in `enamel`, one line of copy, three actions: `Book Appointment`, `Call ⟨phone⟩`, `WhatsApp`. Below in mono: today's hours + emergency note.
+
+11. **Location strip** — `MapEmbed` left, address + hours table + `Get Directions` right.
+
+**Note on section backgrounds:** inserting the About us teaser (and the later reorder swapping it with TrustBar) shifts every subsequent section's position in the alternating `porcelain`/`enamel` band pattern (§5.1). Re-check the full homepage top to bottom whenever section order changes — don't just assign a section a background in isolation; confirm no two adjacent sections end up identical after the shift.
 
 ### 7.2 `/services` — Index
 - Page header: breadcrumb, h1 `Dental treatments in ⟨Locality⟩`, lead paragraph.

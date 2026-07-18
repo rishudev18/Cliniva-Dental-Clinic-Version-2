@@ -47,9 +47,10 @@ export const metadata: Metadata = {
 
 const homeFaqs = faqs.slice(0, 6);
 
-// Home page (SPEC §7.1) — all 10 sections in order. Every heading and card
-// grid picks up the CSS-only §5.4 scroll-reveal (via SectionHeading, or a
-// `.reveal` class on the grid wrapper directly).
+// Home page (SPEC §7.1) — all 11 sections in order (section 2, About us
+// teaser, added post-launch). Every heading and card grid picks up the
+// CSS-only §5.4 scroll-reveal (via SectionHeading, or a `.reveal` class on
+// the grid wrapper directly).
 
 const differentiatorIcons: Record<string, LucideIcon> = {
   ShieldCheck,
@@ -114,17 +115,51 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 2 — TrustBar — bg-enamel so hero→trustbar→services isn't three
-          identical porcelain bands in a row (§14 "no two identical
-          adjacent bands"). */}
+      {/* 2 — TrustBar. Reordered ahead of the About us teaser per
+          client request — spec order was Hero → About us → TrustBar;
+          this build is Hero → TrustBar → About us. bg-enamel since the
+          hero above is porcelain (default). */}
       <section className="bg-enamel py-12">
         <Container>
           <TrustBar />
         </Container>
       </section>
 
-      {/* 3 — Services */}
+      {/* 3 — About us (teaser), added post-launch (§7.1 sec 2). Mirrors the
+          hero's layout pattern (text ~60% / photo ~40%, photo below text
+          on mobile, same 280px mobile height cap) but built entirely from
+          existing primitives — no new component, per spec. Porcelain
+          (default) since section 2 above is now enamel — every background
+          below was re-checked top to bottom after this reorder (§14 "no
+          two identical adjacent bands"). */}
       <section className="py-16 md:py-24">
+        <Container className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
+          <div className="md:w-3/5">
+            <SectionHeading
+              eyebrow="About us"
+              title={`Specialist dental care in ${address.locality}`}
+              lead={home.aboutTeaser.body}
+            />
+            <p className="mt-6 font-mono text-sm text-graphite">
+              {[`Est. ${clinic.established}`, ...home.aboutTeaser.quickFacts].join(" · ")}
+            </p>
+            <div className="mt-6">
+              <SectionLink href="/about">Learn more about us</SectionLink>
+            </div>
+          </div>
+
+          <div className="md:w-2/5">
+            <div className="flex aspect-[4/5] max-h-[280px] w-full flex-col items-center justify-center gap-2 rounded-card bg-gradient-to-br from-rinse to-enamel md:max-h-none">
+              <span className="font-mono text-eyebrow uppercase text-scrub">
+                About us — photo to come
+              </span>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* 4 — Services */}
+      <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Treatments" title="Popular treatments" />
           <div className="reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -138,8 +173,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 4 — Why this clinic */}
-      <section className="bg-enamel py-16 md:py-24">
+      {/* 5 — Why this clinic */}
+      <section className="py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Why this clinic" title="What to expect here" />
           <div className="reveal mt-10 grid gap-8 md:grid-cols-2">
@@ -161,8 +196,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 5 — Cost Clarity (condensed) */}
-      <section className="py-16 md:py-24">
+      {/* 6 — Cost Clarity (condensed) */}
+      <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading
             eyebrow="Pricing"
@@ -178,8 +213,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 6 — Meet the team */}
-      <section className="bg-enamel py-16 md:py-24">
+      {/* 7 — Meet the team */}
+      <section className="py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Our doctors" title="Meet the team" lead={home.teamIntro} />
           <div className="reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -193,8 +228,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 7 — Testimonials */}
-      <section className="py-16 md:py-24">
+      {/* 8 — Testimonials */}
+      <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Testimonials" title="What patients say" />
           <div className="reveal mt-10 -mx-5 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
@@ -225,8 +260,8 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 8 — FAQ */}
-      <section className="bg-enamel py-16 md:py-24">
+      {/* 9 — FAQ */}
+      <section className="py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Questions" title="Frequently asked questions" />
           <JsonLd data={faqPageJsonLd(homeFaqs)} />
@@ -246,11 +281,12 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 9 — Booking CTA band */}
+      {/* 10 — Booking CTA band */}
       <CtaBand heading={cta.heading} body={cta.body} />
 
-      {/* 10 — Location strip */}
-      <section className="py-16 md:py-24">
+      {/* 11 — Location strip — enamel; differs from the CTA band's scrub
+          above it either way, chosen to continue the alternation read. */}
+      <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Visit us" title="Find the clinic" />
           <div className="mt-10 grid gap-10 md:grid-cols-2 md:items-start">

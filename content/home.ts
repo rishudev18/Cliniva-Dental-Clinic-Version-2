@@ -18,6 +18,16 @@ export const home = {
       string,
     ],
   },
+  // §7.1 section 2, added post-launch. Eyebrow ("About us") and the h2
+  // template (locality-interpolated) are structural/spec-fixed and stay
+  // inline in page.tsx, matching the precedent set by the hero's own
+  // eyebrow/heading. "Est. ⟨year⟩" is likewise built inline from
+  // clinic.established (single source of truth) rather than duplicated
+  // here — quickFacts holds only the two authored, non-derived facts.
+  aboutTeaser: {
+    body: "Clivia Dental Clinic has treated families in DLF Phase 2 since 2012. Four specialist doctors work under one roof, each focused on their own area, so your case goes to someone trained specifically for it rather than a single generalist handling everything.",
+    quickFacts: ["4 specialist dentists", "Digital X-ray on site"] as [string, string],
+  },
   differentiators: [
     {
       icon: "ShieldCheck",

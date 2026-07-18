@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-7 (Hero headline copy change)
+8 (Home page §7.1 section 2: About us teaser + reorder)
 
 ## Current step
-Hero h1 copy update complete — site otherwise unchanged since Step 14
+About us teaser section built, then reordered ahead of TrustBar per client request; spec updated to match — site otherwise unchanged since Step 14
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -16,6 +16,7 @@ Hero h1 copy update complete — site otherwise unchanged since Step 14
 - [x] Session 5 — SEO layer, a11y/perf pass, final acceptance check (Steps 11–13) — completed 2026-07-18
 - [x] Session 6 — Nav revision: restructured nav, /smile-gallery, content/gallery.ts (Step 14) — completed 2026-07-19
 - [x] Session 7 — Hero headline copy change — completed 2026-07-19
+- [x] Session 8 — Home page About us teaser + section reorder — completed 2026-07-19
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -227,3 +228,12 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npx tsc --noEmit` clean. Live check on this session's dev server at 375px: raw HTML fetched via `curl` (no browser JS) contains the new headline verbatim, plus the unchanged lead/CTA text, satisfying Hard rule 2. Per-line wrap measured via the DOM Range API (not just a screenshot, since this sandbox's screenshot tool is unreliable — see Step 5/12's documented renderer quirk): the longer headline wraps cleanly to 3 lines ("Transform your smile." / "Transform your" / "confidence.") at word boundaries, max line width 328px against a 375px viewport — no horizontal overflow (`body.scrollWidth === body.clientWidth`). Both hero CTAs measured via `getBoundingClientRect()` stay fully inside the 812px mobile viewport (bottoms at 558px and 634px) — not pushed below the fold by the extra line.
 - Commit: Hero headline copy update: content/home.ts
 - Open questions for next session: none from this change. All open items from Step 13/14 remain outstanding and unaffected.
+
+### Home page §7.1 section 2: About us teaser + reorder — 2026-07-19
+- What was built: SPEC.md §7.1 was updated to add a new home-page section, "About us (teaser)," right after the hero, with every subsequent section renumbered. Built it in `app/(site)/page.tsx` using only existing primitives (`SectionHeading`, `Container`, the page-local `SectionLink` helper already used elsewhere on this page) — no new component, per spec: eyebrow `About us`, h2 `Specialist dental care in ⟨Locality⟩` (locality-interpolated, kept inline like the hero's own eyebrow/heading, since it's structural), a 2–3 sentence body, a mono quick-facts row (`Est. ⟨year⟩ · 4 specialist dentists · Digital X-ray on site`), and a `Learn more about us →` link to `/about`. New `content/home.ts` field `aboutTeaser: { body, quickFacts }` — `quickFacts` holds only the two authored facts; `Est. ⟨year⟩` is built inline from `clinic.established` (already the single source of truth for that value) rather than duplicated in the new field. Photo is a labelled placeholder matching the hero's own (`rinse`→`enamel` wash, 4:5 ratio, 280px mobile height cap). Immediately after, on direct instruction, the section was reordered ahead of TrustBar — final order is Hero → TrustBar → About us → Services → ... (originally spec'd as Hero → About us → TrustBar). SPEC.md §7.1 was updated a second time to match the actual built order, with a note on the reorder.
+- Decisions made / deviations from SPEC.md (and why):
+  - The reorder is itself a deviation from what was originally spec'd (and already built and verified) for section 2/3 order — done on direct client instruction after seeing the built page, and immediately reflected back into SPEC.md so the two don't drift; not a case of building something un-spec'd, since the spec was corrected same-session.
+  - Every section background from TrustBar onward was re-checked and re-assigned after both changes (once for the insertion, once again for the reorder) rather than just patching the two moved sections in isolation, per §7.1's explicit note that inserting/reordering shifts the whole alternating `porcelain`/`enamel` sequence.
+- Verified: `npx tsc --noEmit` clean after both the insertion and the reorder. Live in-browser checks (this session's dev server) after the final reorder: programmatic walk of all 11 `<main>` children confirmed the order Hero → TrustBar → About us → Services → Why this clinic → Cost Clarity → Meet the team → Testimonials → FAQ → CTA band → Location strip, with backgrounds `porcelain, enamel, porcelain, enamel, porcelain, enamel, porcelain, enamel, porcelain, scrub, enamel` — no two adjacent sections identical anywhere in the sequence. About us section content confirmed rendering exactly as authored (eyebrow, h2 with interpolated locality, body, quick-facts row, `Learn more about us` link resolving to `/about`) and its two-column markup matches the hero's own classes (`md:w-3/5`/`md:w-2/5`, `flex flex-col md:flex-row`). At 375px: no horizontal overflow, photo stacks below text, photo height exactly 280px — same as the hero's own mobile treatment. Separately investigated a Next.js dev-overlay hydration warning the user encountered (`cz-shortcut-listen="true"` attribute mismatch on `<body>`) — reproduced the "Learn more about us" click in this session's browser with a clean console both before and after navigation, confirming the warning is caused by the ColorZilla browser extension injecting that attribute pre-hydration (an environment artifact, not a code defect); no code change was made for it.
+- Commit: (combined with this entry — see git log)
+- Open questions for next session: none from this change. Confirm with the client whether the Hero → TrustBar → About us order is final, since it now deviates from every prior build-order document's original sequencing convention; if it changes again, both `page.tsx`'s background classes and SPEC.md §7.1 need the same re-check treatment.
