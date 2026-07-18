@@ -10,7 +10,7 @@ export type Differentiator = { icon: string; title: string; body: string };
 export const home = {
   hero: {
     // Benefit statement, not the clinic name (§7.1).
-    headline: "See the X-ray, hear the price, then decide",
+    headline: "Transform your smile. Transform your confidence.",
     lead: "Four specialist doctors, sterilised instruments opened in front of you, and a written price range before any treatment starts. Same-day appointments for pain, seven days a week.",
     microTrust: ["Same-day appointments", "Digital X-ray", "Sterilised, sealed instruments"] as [
       string,

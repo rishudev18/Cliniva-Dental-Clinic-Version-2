@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-6 (Nav revision — Step 14: restructured nav, /smile-gallery, content/gallery.ts)
+7 (Hero headline copy change)
 
 ## Current step
-Step 14 complete — nav revision built and verified; site otherwise unchanged since Step 13
+Hero h1 copy update complete — site otherwise unchanged since Step 14
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -15,6 +15,7 @@ Step 14 complete — nav revision built and verified; site otherwise unchanged s
 - [x] Session 4 — About, Pricing, Contact, Book, Thank-you (Steps 9–10) — completed 2026-07-18
 - [x] Session 5 — SEO layer, a11y/perf pass, final acceptance check (Steps 11–13) — completed 2026-07-18
 - [x] Session 6 — Nav revision: restructured nav, /smile-gallery, content/gallery.ts (Step 14) — completed 2026-07-19
+- [x] Session 7 — Hero headline copy change — completed 2026-07-19
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -219,3 +220,10 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npx tsc --noEmit` clean. Live in-browser checks (this session's dev server): desktop (1280px) header renders the new order with Pricing absent; mobile overlay (invoked via the documented React-handler workaround for this environment's known click-simulation quirk, see Step 12) lists the same 5 items in the same order; footer's Clinic column lists all 5 expected links including the new Smile Gallery one. `/smile-gallery`: raw HTML fetched via `curl` (no browser JS) contains the h1, lead paragraph, and empty-state message verbatim — Hard rule 2 satisfied. Programmatic check across 8 routes (`/`, `/services`, `/about`, `/smile-gallery`, `/pricing`, `/contact`, `/book`, a service detail page) confirmed exactly one `<h1>` and no unintended layout differences; a further check at 375px across the same set (minus `/book`, checked separately for its intentionally different minimal chrome) confirmed a byte-identical 65px mobile header, desktop nav hidden, hamburger visible, and zero `scrollWidth`/`clientWidth` mismatch (no horizontal overflow) on every route including `/pricing` (the widest layout) and the new `/smile-gallery` grid/empty-state. Repo-wide: `"use client"` directive (anchored grep, not substring) still in exactly the 4 permitted files; hex grep clean outside the four previously-documented exceptions; `sitemap.xml` includes `/smile-gallery`.
 - Commit: Step 14 — Nav revision: restructured header/mobile/footer nav, /smile-gallery page, content/gallery.ts
 - Open questions for next session: `content/gallery.ts`'s 3 placeholder entries are structural scaffolding only (empty image paths, `consentObtained: false`) — real entries need real before/after images and an actual signed consent record per entry before flipping `consentObtained` to `true`. All §13 client-input placeholders noted at the end of Step 13 are still outstanding and unaffected by this session's work.
+
+### Hero headline copy change — 2026-07-19
+- What was built: `content/home.ts`'s `hero.headline` changed from `"See the X-ray, hear the price, then decide"` to `"Transform your smile. Transform your confidence."`, per direct instruction. Eyebrow, lead paragraph, micro-trust row, and both hero CTAs (`Book appointment` / `WhatsApp us`) were left untouched — only the one string changed.
+- Decisions made / deviations from SPEC.md (and why): none — a single content-file string edit, no component or layout change needed.
+- Verified: `npx tsc --noEmit` clean. Live check on this session's dev server at 375px: raw HTML fetched via `curl` (no browser JS) contains the new headline verbatim, plus the unchanged lead/CTA text, satisfying Hard rule 2. Per-line wrap measured via the DOM Range API (not just a screenshot, since this sandbox's screenshot tool is unreliable — see Step 5/12's documented renderer quirk): the longer headline wraps cleanly to 3 lines ("Transform your smile." / "Transform your" / "confidence.") at word boundaries, max line width 328px against a 375px viewport — no horizontal overflow (`body.scrollWidth === body.clientWidth`). Both hero CTAs measured via `getBoundingClientRect()` stay fully inside the 812px mobile viewport (bottoms at 558px and 634px) — not pushed below the fold by the extra line.
+- Commit: Hero headline copy update: content/home.ts
+- Open questions for next session: none from this change. All open items from Step 13/14 remain outstanding and unaffected.
