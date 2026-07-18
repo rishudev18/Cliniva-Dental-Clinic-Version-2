@@ -37,6 +37,19 @@ const config: Config = {
       transitionTimingFunction: {
         clinic: "cubic-bezier(0.2, 0, 0, 1)",
       },
+      transitionDuration: {
+        // §5.4 — 200ms hover/focus (Tailwind default duration-200), 320ms expand/collapse
+        "320": "320ms",
+      },
+      borderColor: {
+        // §5.3 — graphite at 18%; the default for the bare `border` class
+        DEFAULT: "rgba(92,110,120,0.18)",
+      },
+      fontSize: {
+        // §5.2 type scale entries not covered by Tailwind defaults
+        "body-l": ["1.125rem", { lineHeight: "1.65" }],
+        eyebrow: ["0.75rem", { lineHeight: "1", letterSpacing: "0.12em", fontWeight: "500" }],
+      },
     },
   },
   plugins: [],

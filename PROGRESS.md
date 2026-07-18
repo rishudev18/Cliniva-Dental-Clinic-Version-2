@@ -4,7 +4,7 @@
 2 (catching up Steps 2–3 first, per user approval, then Steps 4–6)
 
 ## Current step
-Step 2 complete — continuing to Step 3
+Step 3 complete — continuing to Step 4
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -53,3 +53,13 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npm run build` clean, zero TS errors strict; grep of /content confirms zero exclamation marks, zero banned phrases (§16: state-of-the-art, world-class, painless, we care, your journey), no lorem ipsum, no ⟨TODO⟩ markers, no hex values. All §4.5 mandatory FAQ topics present; trust.ts has exactly 4 entries; testimonials within 180 chars.
 - Commit: Step 2 — Content layer: all /content data files with full placeholder copy
 - Open questions for next session: confirm §13 placeholder values before launch (email, year, geo, reg. numbers, prices, reviews).
+
+### Step 3 — Primitives — 2026-07-18
+- What was built: `components/ui/Button.tsx` (primary/secondary/ghost × sm/md/lg, renders Next `Link` for internal hrefs, `<a rel="noopener">` for external, `<button>` otherwise; all sizes keep §10's 44px min touch target), `components/ui/SectionHeading.tsx` (mono eyebrow + h1/h2 + optional lead, left/center align), `components/ui/Container.tsx` (§5.3 container), `lib/utils.ts` (`cn`, `formatINR`, `formatINRRange`, `whatsappUrl` with both §8.3 templates), typography base styles in `globals.css` (§5.2 h1/h2/h3 clamp scale, body leading 1.65, global §10 focus ring 2px clinic offset 2, §5.4 prefers-reduced-motion kill switch), tailwind.config.ts extensions (default border = graphite 18%, `text-body-l`/`text-eyebrow` sizes, `duration-320`), and the temporary `/styleguide` route rendering every token, type size, button variant/size/state, shadow, and radius.
+- Decisions made / deviations from SPEC.md (and why):
+  - Button hover states chosen within tokens: primary fills scrub, secondary re-inks to clinic, ghost underlines + inks scrub (clinic stays interactive-only, rinse never carries text).
+  - `/styleguide` displays the 9 token hex strings as text labels for review — same tokens, no new colors; the whole route is deleted before shipping per §12.
+  - `whatsappUrl` builds §8.3 message templates from `clinic.name` in `lib` — functional strings specified by the spec, not page copy.
+- Verified: `npm run build` clean (5 routes, zero TS errors); /styleguide checked in browser via computed styles — Newsreader h1 (60px/500/-0.02em), IBM Plex Mono eyebrow (12px/0.12em/uppercase), primary button bg rgb(28,123,168), radius 999px, min-height 44px, ease cubic-bezier(0.2,0,0,1), default border rgba(92,110,120,0.18), body leading 1.65; compiled CSS contains `:focus-visible { outline: rgb(28,123,168) solid 2px; offset 2px }` and the prefers-reduced-motion override; console clean; zero `"use client"` in repo.
+- Commit: Step 3 — Primitives: Button, SectionHeading, Container, type base styles, /styleguide
+- Open questions for next session: none.
