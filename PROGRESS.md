@@ -4,13 +4,13 @@
 2 (catching up Steps 2–3 first, per user approval, then Steps 4–6)
 
 ## Current step
-Step 5 complete — continuing to Step 6
+Step 6 complete — Session 2 (Steps 4–6, plus catch-up Steps 2–3) done; awaiting review and go-ahead for Session 3
 
 ## Session map
 (check off when the whole session is complete and verified)
 
 - [x] Session 1 — Setup, content layer, primitives (SPEC.md §12 Steps 1–3) — completed 2026-07-18 (Steps 2–3 caught up in the Session 2 sitting, per user approval)
-- [ ] Session 2 — Layout, cards/blocks, Cost Clarity Table (Steps 4–6)
+- [x] Session 2 — Layout, cards/blocks, Cost Clarity Table (Steps 4–6) — completed 2026-07-18
 - [ ] Session 3 — Home page, Services index + detail template (Steps 7–8)
 - [ ] Session 4 — About, Pricing, Contact, Book, Thank-you (Steps 9–10)
 - [ ] Session 5 — SEO layer, a11y/perf pass, final acceptance check (Steps 11–13)
@@ -85,3 +85,10 @@ Append one entry per completed step. Never delete old entries — this file is t
   - IMPORTANT verification caveat discovered: the in-app Browser pane runs with `visibilityState: "hidden"` — requestAnimationFrame never fires, so NO CSS transition ever starts there (a plain `height:10px→110px` transition stays stuck too), and screenshots time out. The accordion's grid-rows animation appeared "stuck at 0fr" for this reason only; with `transition:none` forced, the open state measures the full 99px, proving the CSS states are correct. All animation/transition behaviour must be eyeballed in a real browser window; state/DOM/aria checks remain verifiable here.
 - Commit: Step 5 — Cards and blocks: ServiceCard, DoctorCard, TestimonialCard, TrustBar, FaqAccordion, MapEmbed, Breadcrumbs
 - Open questions for next session: none.
+
+### Step 6 — Signature: CostClarityTable — 2026-07-18
+- What was built: `components/blocks/CostClarityTable.tsx`, both variants (§5.5). `full`: honest range note (from `content/pricing.ts`) above; all 12 treatments grouped by category with mono eyebrow headers; each desktop row = name (Public Sans 600, `<th scope=row>`) · price range (IBM Plex Mono, tabular numerals, `₹4,000 – ₹9,000` + unit) · what-determines-the-range (small graphite, from `priceNote`) · Book link (`/book?treatment=slug`, aria-labelled per treatment); below, the What's included / What costs extra columns. `condensed`: the 6 primary treatments, ungrouped, for home//services/service pages. Desktop renders real `<table>`s with sr-only captions/headers; below `md` the same rows render as stacked cards where the mono price (20px) outweighs the name (16px), per §5.5. Both variants added to /styleguide for review.
+- Decisions made / deviations from SPEC.md (and why): desktop table + mobile cards are two renderings (`hidden md:block` / `md:hidden`) — a semantic table can't reflow into cards with CSS alone; copy is still single-sourced from /content and both renderings are in the server HTML.
+- Verified: `tsc --noEmit` and full production build clean (stopped the dev server first this time); raw no-JS HTML contains all 4 category headers, price notes, units, range note, included/extra lists, and 18 Book links per rendering; browser at 1280px — 5 pricing tables visible, mobile lists hidden, price cells IBM Plex Mono with tabular-nums, row names weight 600; at 375px — tables hidden, cards visible, price 20px > name 16px, no horizontal overflow; console clean. Repo-wide: `"use client"` in exactly MobileNav + StickyMobileCta + FaqAccordion (3 of the 4 permitted; AppointmentForm comes in Step 10); no hex outside tailwind.config.ts (+ documented styleguide swatch labels); content copy greps still clean (no exclamation marks, banned phrases, lorem, or TODO markers).
+- Commit: Step 6 — Signature: CostClarityTable, full and condensed variants
+- Open questions for next session: Session 3 (Steps 7–8) builds the home page and services pages on top of these blocks. Reminder: the in-app Browser pane cannot render animations or screenshots (hidden renderer) — review animation feel in a normal browser at localhost:3000/styleguide.

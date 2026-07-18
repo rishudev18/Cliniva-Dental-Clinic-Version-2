@@ -1,3 +1,4 @@
+import { CostClarityTable } from "@/components/blocks/CostClarityTable";
 import { DoctorCard } from "@/components/blocks/DoctorCard";
 import { FaqAccordion } from "@/components/blocks/FaqAccordion";
 import { MapEmbed } from "@/components/blocks/MapEmbed";
@@ -246,6 +247,21 @@ export default function Styleguide() {
           <h2 className="text-scrub">MapEmbed</h2>
           <div className="mt-6">
             <MapEmbed />
+          </div>
+        </section>
+
+        {/* Step 6 — signature element */}
+        <section className="mt-16">
+          <h2 className="text-scrub">CostClarityTable — condensed</h2>
+          <div className="mt-6">
+            <CostClarityTable variant="condensed" />
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">CostClarityTable — full</h2>
+          <div className="mt-6">
+            <CostClarityTable variant="full" />
           </div>
         </section>
       </Container>
