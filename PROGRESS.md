@@ -4,12 +4,12 @@
 2 (catching up Steps 2–3 first, per user approval, then Steps 4–6)
 
 ## Current step
-Step 3 complete — continuing to Step 4
+Step 4 complete — continuing to Step 5
 
 ## Session map
 (check off when the whole session is complete and verified)
 
-- [ ] Session 1 — Setup, content layer, primitives (SPEC.md §12 Steps 1–3)
+- [x] Session 1 — Setup, content layer, primitives (SPEC.md §12 Steps 1–3) — completed 2026-07-18 (Steps 2–3 caught up in the Session 2 sitting, per user approval)
 - [ ] Session 2 — Layout, cards/blocks, Cost Clarity Table (Steps 4–6)
 - [ ] Session 3 — Home page, Services index + detail template (Steps 7–8)
 - [ ] Session 4 — About, Pricing, Contact, Book, Thank-you (Steps 9–10)
@@ -63,3 +63,14 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npm run build` clean (5 routes, zero TS errors); /styleguide checked in browser via computed styles — Newsreader h1 (60px/500/-0.02em), IBM Plex Mono eyebrow (12px/0.12em/uppercase), primary button bg rgb(28,123,168), radius 999px, min-height 44px, ease cubic-bezier(0.2,0,0,1), default border rgba(92,110,120,0.18), body leading 1.65; compiled CSS contains `:focus-visible { outline: rgb(28,123,168) solid 2px; offset 2px }` and the prefers-reduced-motion override; console clean; zero `"use client"` in repo.
 - Commit: Step 3 — Primitives: Button, SectionHeading, Container, type base styles, /styleguide
 - Open questions for next session: none.
+
+### Step 4 — Layout — 2026-07-18
+- What was built: `components/layout/` — `Header` (server; sticky enamel bar, §3.2 desktop nav with CSS-only Services dropdown via group-hover/group-focus-within listing the 6 primary treatments, mobile phone icon + hamburger), `MobileNav` (client, permitted; full-screen overlay with body scroll lock, Esc + route-change close, focus trap, focus return to trigger), `Footer` (server; scrub bg, 4 §3.2 columns — clinic/positioning/address/directions, 6 treatment links, clinic pages, hours table + phone/WhatsApp/email — plus © bottom bar with nofollow credit link), `StickyMobileCta` (client, permitted; appears past 400px scroll, Call + WhatsApp halves with §8.3 prefilled deep link), `SkipLink`. All wired into `app/layout.tsx` with `#main-content` focus target.
+- Decisions made / deviations from SPEC.md (and why):
+  - Header "border after 8px scroll" done with a CSS scroll-driven animation (`animation-timeline: scroll()`) instead of JS — hard rule 1 forbids a client Header; unsupported browsers just always show the border (graceful).
+  - Nav labels (Services/Pricing/About/Contact/Book appointment) and footer column headers live in the layout components — they are §3.2 navigation structure fixed by the spec, not page copy; all names/links/copy still come from /content.
+  - Footer credit "Website by Rishu Kumar" with placeholder URL rishukumar.dev (spec's ⟨Your Name⟩) — confirm the real link.
+  - Learned: don't run `npm run build` while the dev server shares `.next` — it corrupts the dev server's chunks (hit a 500; fixed by clearing .next and restarting). Typecheck with `tsc --noEmit` mid-session instead.
+- Verified: production build clean before dev restart; raw no-JS server HTML contains all header/footer copy (name, hours, phone, treatment links, skip link, credit); browser checks at 375px — hamburger visible/desktop nav hidden, overlay opens with 12 links, body scroll locks, aria-expanded toggles, focus moves into overlay, Esc closes + unlocks + returns focus, sticky CTA hidden at top and shows both halves after 400px with correctly encoded wa.me link; at 1280px — dropdown hidden by default, visible on keyboard focus, hidden on blur, lists 6 treatments + view-all; header sticky with header-border-in scroll animation active; console clean; `"use client"` in exactly MobileNav + StickyMobileCta; no hex outside tailwind.config.ts (+ documented styleguide labels).
+- Commit: Step 4 — Layout: Header, MobileNav, Footer, StickyMobileCta, SkipLink
+- Open questions for next session: /book needs its minimal-header variant when Step 10 builds that page.

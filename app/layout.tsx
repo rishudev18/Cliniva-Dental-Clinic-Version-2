@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Newsreader, Public_Sans } from "next/font/google";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { SkipLink } from "@/components/layout/SkipLink";
+import { StickyMobileCta } from "@/components/layout/StickyMobileCta";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -39,7 +43,13 @@ export default function RootLayout({
       className={`${newsreader.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
     >
       <body className="bg-porcelain font-body text-scrub antialiased">
-        {children}
+        <SkipLink />
+        <Header />
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
+        <Footer />
+        <StickyMobileCta />
       </body>
     </html>
   );

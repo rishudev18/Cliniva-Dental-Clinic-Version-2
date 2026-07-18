@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Header bottom border appearing after 8px of scroll (§6), without JS:
+   a CSS scroll-driven animation where supported; browsers without support
+   simply always show the border. Color is graphite at 18% (§5.3). */
+@layer components {
+  .header-border {
+    border-bottom: 1px solid rgba(92, 110, 120, 0.18);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .header-border {
+      border-bottom-color: transparent;
+      animation: header-border-in linear both;
+      animation-timeline: scroll();
+      animation-range: 0 8px;
+    }
+  }
+}
+
+@keyframes header-border-in {
+  to {
+    border-bottom-color: rgba(92, 110, 120, 0.18);
+  }
+}
+
 /* Typography base styles per SPEC §5.2. h1/h2 are Newsreader (display);
    h3 down stays Public Sans. Body leading 1.65. */
 @layer base {
