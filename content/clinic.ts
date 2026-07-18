@@ -26,6 +26,7 @@ export type Clinic = {
   emergencyNote: string;
   established: string; // year
   social: { instagram?: string; facebook?: string; practo?: string };
+  googleRating: { value: number; count: number; url: string };
 };
 
 export const clinic: Clinic = {
@@ -60,5 +61,12 @@ export const clinic: Clinic = {
     // Placeholders — confirm live profile URLs with the clinic.
     instagram: "https://www.instagram.com/cliviadentalclinic",
     practo: "https://www.practo.com/gurgaon/clinic/clivia-dental-clinic",
+  },
+  // Placeholder — confirm the live rating, review count, and profile link
+  // from the clinic's Google Business Profile before launch.
+  googleRating: {
+    value: 4.8,
+    count: 240,
+    url: "https://www.google.com/search?q=Clivia+Dental+Clinic+DLF+Phase+2+Gurugram+reviews",
   },
 };

@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
 
 // Server Component. Eyebrow (mono) + heading (Newsreader via base styles)
-// + optional lead paragraph, per SPEC §6.
+// + optional lead paragraph, per SPEC §6. Carries the `.reveal` scroll-in
+// treatment (§5.4) so every section heading gets it automatically.
 
 type SectionHeadingProps = {
   eyebrow?: string;
@@ -23,7 +24,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   const centered = align === "center";
   return (
-    <div className={cn(centered && "text-center", className)}>
+    <div className={cn("reveal", centered && "text-center", className)}>
       {eyebrow && (
         <p className="font-mono text-eyebrow uppercase text-graphite">{eyebrow}</p>
       )}

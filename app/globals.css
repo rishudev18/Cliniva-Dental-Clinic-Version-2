@@ -26,6 +26,56 @@
   }
 }
 
+/* Scroll-reveal: fade in + 12px rise, applied to section headings and card
+   grids (§5.4). The spec describes this as an IntersectionObserver client
+   wrapper, but hard rule 1 permits "use client" only in four named
+   components — none of which this is. A CSS scroll-driven animation
+   (`animation-timeline: view()`) gives the same "fires once as the element
+   enters the viewport" behaviour without JS, following the same pattern as
+   the header border above. Unsupported browsers show content immediately,
+   and prefers-reduced-motion (below) disables it everywhere. */
+@layer components {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes reveal-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero load fade — 400ms, page-load-triggered (not scroll-linked), so a
+   plain CSS animation is enough (§7.1: "no animation on hero load beyond a
+   400ms fade"). */
+@layer components {
+  .hero-fade {
+    animation: hero-fade-in 400ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Typography base styles per SPEC §5.2. h1/h2 are Newsreader (display);
    h3 down stays Public Sans. Body leading 1.65. */
 @layer base {
