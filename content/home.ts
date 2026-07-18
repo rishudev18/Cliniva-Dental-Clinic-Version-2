@@ -41,8 +41,4 @@ export const home = {
     },
   ] satisfies Differentiator[],
   teamIntro: "Four specialist doctors, each seeing their own patients from first visit to last.",
-  ctaBand: {
-    heading: "Book your appointment",
-    body: "Same-day slots for pain, and a written price range before you agree to treatment.",
-  },
 };

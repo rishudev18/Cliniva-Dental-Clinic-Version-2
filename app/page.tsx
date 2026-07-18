@@ -20,6 +20,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StarRating } from "@/components/ui/StarRating";
 import { clinic } from "@/content/clinic";
+import { cta } from "@/content/cta";
 import { doctors } from "@/content/doctors";
 import { faqs } from "@/content/faqs";
 import { home } from "@/content/home";
@@ -225,7 +226,7 @@ export default function Home() {
       </section>
 
       {/* 9 — Booking CTA band */}
-      <CtaBand heading={home.ctaBand.heading} body={home.ctaBand.body} />
+      <CtaBand heading={cta.heading} body={cta.body} />
 
       {/* 10 — Location strip */}
       <section className="py-16 md:py-24">

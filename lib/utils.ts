@@ -27,3 +27,15 @@ export function whatsappUrl(serviceName?: string): string {
     : `Hi, I'd like to book an appointment at ${clinic.name}.`;
   return `https://wa.me/${clinic.whatsapp}?text=${encodeURIComponent(message)}`;
 }
+
+/**
+ * Column classes for a card grid whose item count varies (related
+ * treatments, category groups) — collapses cleanly for 1–2 items instead
+ * of leaving an empty slot at wider breakpoints. Never pads with unrelated
+ * items or duplicates to fill a row.
+ */
+export function cardGridCols(count: number): string {
+  if (count <= 1) return "max-w-sm";
+  if (count === 2) return "sm:grid-cols-2";
+  return "sm:grid-cols-2 lg:grid-cols-3";
+}

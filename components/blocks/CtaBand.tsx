@@ -8,15 +8,18 @@ import { whatsappUrl } from "@/lib/utils";
 // (§6/§7.1 sec 9) — reused on the home page and, in later steps, on service,
 // about, and pricing pages. `heading`/`body` are passed in from each page's
 // own content so no copy is hardcoded here; `whatsappServiceName` lets a
-// service page prefill the §8.3 service-specific WhatsApp message.
+// service page prefill the §8.3 service-specific WhatsApp message, and
+// `bookHref` lets it deep-link `/book?treatment=slug` (§7.3 sec 9) so the
+// booking form can preselect the treatment once it exists (Step 10).
 
 type CtaBandProps = {
   heading: string;
   body: string;
   whatsappServiceName?: string;
+  bookHref?: string;
 };
 
-export function CtaBand({ heading, body, whatsappServiceName }: CtaBandProps) {
+export function CtaBand({ heading, body, whatsappServiceName, bookHref = "/book" }: CtaBandProps) {
   const todayHours = clinic.hours[0];
 
   return (
@@ -26,7 +29,7 @@ export function CtaBand({ heading, body, whatsappServiceName }: CtaBandProps) {
         <p className="mx-auto mt-3 max-w-[60ch] text-body-l text-porcelain/85">{body}</p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button href="/book" size="lg">
+          <Button href={bookHref} size="lg">
             Book appointment
           </Button>
           <a

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Plus } from "lucide-react";
+import { IncludedExtra } from "@/components/blocks/IncludedExtra";
 import { pricing } from "@/content/pricing";
 import {
   categoryLabels,
@@ -156,35 +156,8 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
       </div>
 
       {/* What's included / what costs extra (§5.5) — plain, unhedged */}
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        <section
-          aria-label="What's included"
-          className="rounded-card border bg-enamel p-6 shadow-card"
-        >
-          <h3 className="text-scrub">What&rsquo;s included</h3>
-          <ul className="mt-4 space-y-3">
-            {pricing.included.map((item) => (
-              <li key={item} className="flex gap-3 text-sm text-graphite">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-scrub" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section
-          aria-label="What costs extra"
-          className="rounded-card border bg-enamel p-6 shadow-card"
-        >
-          <h3 className="text-scrub">What costs extra</h3>
-          <ul className="mt-4 space-y-3">
-            {pricing.extra.map((item) => (
-              <li key={item} className="flex gap-3 text-sm text-graphite">
-                <Plus className="mt-0.5 h-4 w-4 shrink-0 text-scrub" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </section>
+      <div className="mt-12">
+        <IncludedExtra />
       </div>
     </div>
   );
