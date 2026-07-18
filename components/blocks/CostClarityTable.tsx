@@ -133,8 +133,15 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
 
   return (
     <div>
-      {/* The short honest note above the table (§5.5) */}
-      <p className="max-w-[68ch] text-body-l text-graphite">{pricing.rangeNote}</p>
+      {/* The honest note above the table (§5.5) — 2 paragraphs on the full
+          variant, since /pricing is the one place this gets the fuller
+          explanation (§7.5); condensed uses elsewhere quote the shorter
+          `pricing.rangeNote` directly as their own lead paragraph. */}
+      <div className="max-w-[68ch] space-y-4 text-body-l text-graphite">
+        {pricing.introParagraphs.map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
+      </div>
 
       <div className="mt-8 space-y-10">
         {groups.map((group) => (

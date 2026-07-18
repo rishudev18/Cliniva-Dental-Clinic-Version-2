@@ -39,3 +39,33 @@ export function cardGridCols(count: number): string {
   if (count === 2) return "sm:grid-cols-2";
   return "sm:grid-cols-2 lg:grid-cols-3";
 }
+
+const WEEK_MON_FIRST = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+/**
+ * Whether today falls inside an `hours` row's `days` range (§4.1), so the
+ * full hours table on /contact can highlight today's row. Handles a single
+ * day ("Sunday"), a range ("Monday – Friday"), and a range that wraps past
+ * Sunday. Falls back to `true` for anything it can't parse rather than
+ * silently hiding the highlight.
+ */
+export function isTodayRow(days: string): boolean {
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+  const parts = days.split(/[–-]/).map((s) => s.trim());
+  if (parts.length === 1) return parts[0] === today;
+
+  const [start, end] = parts;
+  const s = WEEK_MON_FIRST.indexOf(start);
+  const e = WEEK_MON_FIRST.indexOf(end);
+  const c = WEEK_MON_FIRST.indexOf(today);
+  if (s === -1 || e === -1) return true;
+  return s <= e ? c >= s && c <= e : c >= s || c <= e;
+}
