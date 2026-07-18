@@ -7,9 +7,12 @@ import { seo } from "@/content/seo";
 import { dentistJsonLd, siteUrl } from "@/lib/jsonld";
 import "./globals.css";
 
+// Weight 500 only — every `font-display` usage across the site (h1/h2 base
+// styles, DoctorCard, Header/Footer/MobileNav clinic name) is `font-medium`;
+// weight 400 was never actually rendered anywhere (§11 "preloaded subset").
 const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["500"],
   variable: "--font-display",
   display: "swap",
 });
