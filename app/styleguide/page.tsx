@@ -1,6 +1,19 @@
+import { DoctorCard } from "@/components/blocks/DoctorCard";
+import { FaqAccordion } from "@/components/blocks/FaqAccordion";
+import { MapEmbed } from "@/components/blocks/MapEmbed";
+import { ServiceCard } from "@/components/blocks/ServiceCard";
+import { TestimonialCard } from "@/components/blocks/TestimonialCard";
+import { TrustBar } from "@/components/blocks/TrustBar";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Button } from "@/components/ui/Button";
+import { Chip } from "@/components/ui/Chip";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { StarRating } from "@/components/ui/StarRating";
+import { doctors } from "@/content/doctors";
+import { faqs } from "@/content/faqs";
+import { primaryServices } from "@/content/services";
+import { testimonials } from "@/content/testimonials";
 import { formatINRRange } from "@/lib/utils";
 
 // TEMPORARY route per SPEC §12 Step 3 — renders every token, type size,
@@ -167,6 +180,72 @@ export default function Styleguide() {
             <span className="rounded-pill bg-rinse px-5 py-2.5">
               <span className="font-mono text-sm text-scrub">rounded-pill 999px · rinse fill</span>
             </span>
+          </div>
+        </section>
+
+        {/* Step 5 — cards and blocks */}
+        <section className="mt-16">
+          <h2 className="text-scrub">Breadcrumbs · Chip · StarRating</h2>
+          <div className="mt-6 space-y-6 rounded-card border bg-enamel p-6 shadow-card">
+            <Breadcrumbs
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Services", href: "/services" },
+                { name: "Root Canal Treatment", href: "/services/root-canal-treatment" },
+              ]}
+            />
+            <div className="flex flex-wrap items-center gap-3">
+              <Chip>Crowns & bridges</Chip>
+              <Chip>Braces</Chip>
+              <StarRating rating={4} />
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">TrustBar</h2>
+          <div className="mt-6 rounded-card border bg-enamel p-8 shadow-card">
+            <TrustBar />
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">ServiceCard</h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {primaryServices.slice(0, 3).map((service) => (
+              <ServiceCard key={service.slug} service={service} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">DoctorCard — compact and full</h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <DoctorCard doctor={doctors[0]} />
+            <DoctorCard doctor={doctors[1]} variant="full" />
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">TestimonialCard</h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.slice(0, 3).map((t) => (
+              <TestimonialCard key={t.name} testimonial={t} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">FaqAccordion</h2>
+          <div className="mt-6 rounded-card border bg-enamel p-6 shadow-card">
+            <FaqAccordion items={faqs.slice(0, 3)} idPrefix="sg-faq" />
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-scrub">MapEmbed</h2>
+          <div className="mt-6">
+            <MapEmbed />
           </div>
         </section>
       </Container>

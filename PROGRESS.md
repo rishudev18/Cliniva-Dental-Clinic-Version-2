@@ -4,7 +4,7 @@
 2 (catching up Steps 2–3 first, per user approval, then Steps 4–6)
 
 ## Current step
-Step 4 complete — continuing to Step 5
+Step 5 complete — continuing to Step 6
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -74,3 +74,14 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: production build clean before dev restart; raw no-JS server HTML contains all header/footer copy (name, hours, phone, treatment links, skip link, credit); browser checks at 375px — hamburger visible/desktop nav hidden, overlay opens with 12 links, body scroll locks, aria-expanded toggles, focus moves into overlay, Esc closes + unlocks + returns focus, sticky CTA hidden at top and shows both halves after 400px with correctly encoded wa.me link; at 1280px — dropdown hidden by default, visible on keyboard focus, hidden on blur, lists 6 treatments + view-all; header sticky with header-border-in scroll animation active; console clean; `"use client"` in exactly MobileNav + StickyMobileCta; no hex outside tailwind.config.ts (+ documented styleguide labels).
 - Commit: Step 4 — Layout: Header, MobileNav, Footer, StickyMobileCta, SkipLink
 - Open questions for next session: /book needs its minimal-header variant when Step 10 builds that page.
+
+### Step 5 — Cards and blocks — 2026-07-18
+- What was built: `components/blocks/` — `ServiceCard` (icon in rinse circle from a lucide name→component map, name, oneLiner, price-from in mono, arrow link; whole card is one link with §5.4 hover lift), `DoctorCard` (compact/full variants; 4:5 labelled portrait placeholder per §13 — initials on rinse, "Portrait to come" — name in Newsreader, qualifications + reg. no. in mono, speciality chips, experience; full adds bio + languages), `TestimonialCard` (initials avatar, treatment tag, StarRating, quote, source badge), `TrustBar` (4 mono stats, dividers on md+), `FaqAccordion` (client, permitted; answers always in DOM, collapsed via CSS grid-template-rows 0fr→1fr at duration-320, aria-expanded/aria-controls/role=region wired, multiple items can be open, first open by default), `MapEmbed` (lazy iframe over a static rinse fallback block with address — labelled placeholder since no map image supplied — plus Get directions button). `components/ui/` — `Chip` (rinse fill, scrub text), `StarRating` (scrub-filled stars, role=img aria-label), `Breadcrumbs` (visible trail + server-rendered BreadcrumbList JSON-LD). `lib/jsonld.ts` — `siteUrl` (placeholder domain cliviadental.in) + `breadcrumbListJsonLd`. Styleguide extended to render all of them with real content data.
+- Decisions made / deviations from SPEC.md (and why):
+  - Star color is scrub (semantic tokens are states-only per §5.1, clinic is interactive-only — scrub is the only compliant ink).
+  - MapEmbed fallback is a styled labelled block, not a static image — no map image supplied yet (§13 photos TODO).
+  - `lib/jsonld.ts` uses placeholder domain `https://cliviadental.in` for absolute BreadcrumbList URLs — §13 domain unconfirmed.
+- Verified: `tsc --noEmit` clean; raw no-JS HTML of /styleguide contains collapsed FAQ answer text, BreadcrumbList JSON-LD, prices/badges (React `<!-- -->` text-node splits accounted for), portrait placeholder, map iframe with loading="lazy" and descriptive title; browser checks — accordion aria-expanded toggles per item, JSON-LD parses as BreadcrumbList, star rating labelled.
+  - IMPORTANT verification caveat discovered: the in-app Browser pane runs with `visibilityState: "hidden"` — requestAnimationFrame never fires, so NO CSS transition ever starts there (a plain `height:10px→110px` transition stays stuck too), and screenshots time out. The accordion's grid-rows animation appeared "stuck at 0fr" for this reason only; with `transition:none` forced, the open state measures the full 99px, proving the CSS states are correct. All animation/transition behaviour must be eyeballed in a real browser window; state/DOM/aria checks remain verifiable here.
+- Commit: Step 5 — Cards and blocks: ServiceCard, DoctorCard, TestimonialCard, TrustBar, FaqAccordion, MapEmbed, Breadcrumbs
+- Open questions for next session: none.
