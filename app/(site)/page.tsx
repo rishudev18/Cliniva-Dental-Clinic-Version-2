@@ -114,8 +114,10 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 2 — TrustBar */}
-      <section className="py-12">
+      {/* 2 — TrustBar — bg-enamel so hero→trustbar→services isn't three
+          identical porcelain bands in a row (§14 "no two identical
+          adjacent bands"). */}
+      <section className="bg-enamel py-12">
         <Container>
           <TrustBar />
         </Container>

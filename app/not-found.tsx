@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { clinic } from "@/content/clinic";
 import { notFound } from "@/content/notFound";
 import { seo } from "@/content/seo";
+import { whatsappUrl } from "@/lib/utils";
 
 // Root not-found.tsx (SPEC §3.1/§15, P1). Renders under app/layout.tsx
 // only — nested route-group chrome (app/(site)/layout.tsx's Header/Footer)
@@ -28,13 +29,24 @@ export default function NotFound() {
           <Link href="/" className="font-display text-xl font-medium text-scrub">
             {clinic.name}
           </Link>
-          <a
-            href={`tel:${clinic.phone}`}
-            className="flex items-center gap-2 font-mono text-sm text-scrub transition duration-200 ease-clinic hover:text-clinic"
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            {clinic.phoneDisplay}
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href={`tel:${clinic.phone}`}
+              className="flex items-center gap-2 font-mono text-sm text-scrub transition duration-200 ease-clinic hover:text-clinic"
+            >
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              {clinic.phoneDisplay}
+            </a>
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener"
+              aria-label="WhatsApp us"
+              className="flex items-center gap-2 text-scrub transition duration-200 ease-clinic hover:text-clinic"
+            >
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
         </Container>
       </header>
 
@@ -45,7 +57,10 @@ export default function NotFound() {
           <p className="mt-3 text-body-l text-graphite">{notFound.body}</p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Button href="/">Back to home</Button>
+            <Button href="/book">Book appointment</Button>
+            <Button href="/" variant="ghost">
+              Back to home
+            </Button>
             {notFound.links.map((link) => (
               <Link
                 key={link.href}
