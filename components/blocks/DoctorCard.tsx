@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Doctor } from "@/content/doctors";
 import { Chip } from "@/components/ui/Chip";
 
@@ -22,12 +23,24 @@ export function DoctorCard({ doctor, variant = "compact" }: DoctorCardProps) {
 
   return (
     <article className="flex h-full flex-col rounded-card border bg-enamel p-5 shadow-card">
-      {/* Portrait placeholder, 4:5 (§13) */}
-      <div className="flex aspect-[4/5] flex-col items-center justify-center gap-2 rounded-sm bg-rinse">
-        <span className="font-display text-5xl font-medium text-scrub">{initials}</span>
-        <span className="font-mono text-eyebrow uppercase text-scrub">
-          Portrait to come
-        </span>
+      {/* Portrait */}
+      <div className="relative flex aspect-[4/5] flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-rinse">
+        {doctor.photo ? (
+          <Image
+            src={doctor.photo}
+            alt={`Portrait of ${doctor.name}`}
+            fill
+            sizes="(min-width: 768px) 25vw, 100vw"
+            className="object-cover"
+          />
+        ) : (
+          <>
+            <span className="font-display text-5xl font-medium text-scrub">{initials}</span>
+            <span className="font-mono text-eyebrow uppercase text-scrub">
+              Portrait to come
+            </span>
+          </>
+        )}
       </div>
 
       <h3 className="mt-4 font-display text-xl font-medium text-scrub">{doctor.name}</h3>

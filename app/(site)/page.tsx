@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -109,10 +110,15 @@ export default function Home() {
           </div>
 
           <div className="md:w-2/5">
-            <div className="flex aspect-[4/5] max-h-[280px] w-full flex-col items-center justify-center gap-2 rounded-card bg-gradient-to-br from-rinse to-enamel md:max-h-none">
-              <span className="font-mono text-eyebrow uppercase text-scrub">
-                Clinic interior — photo to come
-              </span>
+            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-card md:max-h-none">
+              <Image
+                src="/images/hero-new-2.jpg"
+                alt="Close-up of a bright, healthy smile"
+                fill
+                priority
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </Container>
@@ -152,10 +158,14 @@ export default function Home() {
           </div>
 
           <div className="md:w-2/5">
-            <div className="flex aspect-[4/5] max-h-[280px] w-full flex-col items-center justify-center gap-2 rounded-card bg-gradient-to-br from-rinse to-enamel md:max-h-none">
-              <span className="font-mono text-eyebrow uppercase text-scrub">
-                About us — photo to come
-              </span>
+            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-card md:max-h-none">
+              <Image
+                src="/images/ChatGPT%20Image%20Jul%2019%2C%202026%2C%2001_42_49%20PM.png"
+                alt="Clivia Dental Clinic team and interior"
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </Container>
