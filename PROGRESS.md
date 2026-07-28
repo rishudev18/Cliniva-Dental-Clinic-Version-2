@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-10 (Home page premium visual pass — planning + reduced-motion fix)
+10 (Home page premium visual pass — complete)
 
 ## Current step
-Plan for the home-page visual pass written and approved (8 items), but **held pending an updated SPEC.md §5.2/§5.3 token section from the client**. Nothing from that plan is implemented yet. Shipped this session: a confirmed `prefers-reduced-motion` accessibility fix, and 30 baseline screenshots for the pending token change.
+Session 10 is done: both the token pass (Session A — Plus Jakarta Sans typeface swap, new radius/shadow ramp) and the component restyle (Session B — hero, pricing table identity, doctor cards, testimonials, CTA band, scope-expanded to six pages) are implemented, verified, and committed. A follow-up `/doctor` housekeeping pass also trimmed derivable content out of this file's own `CLAUDE.md`. Everything through commit `1205b3a` is pushed to `origin/main`, and the `home-page`/`about-page` worktrees are rebased onto it (both still hold zero commits of their own). Open before this ships to the client: true narrow-viewport (320–375px) visual QA has never happened in this sandbox (tooling floors at ~502px), and a full `web-design-law` Phase 4 two-pass screenshot set plus a Lighthouse run haven't been done — see Session B's entry below for the complete list.
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -18,7 +18,7 @@ Plan for the home-page visual pass written and approved (8 items), but **held pe
 - [x] Session 7 — Hero headline copy change — completed 2026-07-19
 - [x] Session 8 — Home page About us teaser + section reorder — completed 2026-07-19
 - [x] Session 9 — Hero micro-trust row update — completed 2026-07-19
-- [ ] Session 10 — Home page premium visual pass (plan approved; blocked on client token spec) — reduced-motion fix shipped 2026-07-28
+- [x] Session 10 — Home page premium visual pass, scope-expanded to a sitewide component restyle (Session A tokens + Session B components) — completed 2026-07-28
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -294,3 +294,10 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npx tsc --noEmit` and `npm run build` both clean, confirmed a second time on a freshly rebuilt `.next` after the corruption above. All 9 routes return HTTP 200 on the clean server (curl, not just browser navigation). Raw HTML fetch confirms the new headline, rating, FAQ text, and doctor names are all server-rendered (Hard rule 2). Hard rule 1 (`"use client"` in exactly the four permitted files) and Hard rule 3 (no hex outside `tailwind.config.ts` beyond the pre-existing, unrelated OG/manifest exceptions; **exactly one** `bg-gradient` sitewide — the hero wash) both re-confirmed. Zero horizontal overflow at 768 and 1024 across every route Session B touched, plus the four untouched routes checked as a tripwire (none moved, confirming they share nothing with what changed — verified structurally too: none of the six touched files are imported by `/contact`, `/book`, `/thank-you`, or `/privacy`). Doctor-card chip-row alignment measured pixel-identical across all four cards despite wildly varying content length. Deep-link jump from home to `/about#dr-amandeep-singh` lands with the card fully clear of the sticky header (19px to spare). Home vs. `/about` doctor cards confirmed as `<a>` (with hover class) vs. plain `<article>` (without) respectively. `CtaBand`'s `whatsappServiceName`/`bookHref` props confirmed intact on `/services/[slug]` after the restyle. `.reveal` count went 12→16, all 16 confirmed hidden normally and all 16 confirmed visible under a forced `prefers-reduced-motion` condition — no regression from Session A's fix. New hover-transition elements (`DoctorCard` link, `TestimonialCard`, table rows) confirmed to correctly collapse to ~0s under the pre-existing global reduced-motion rule (ordinary CSS transitions, not scroll-timeline-driven, so no new gap the way `.reveal`/`.header-border` had). Keyboard focus on the new doctor-card links produces a visible `:focus-visible` ring in `clinic` blue.
 - Commit: Component restyle + home visual pass (items 1–6) — hero, pricing table identity, doctor cards, testimonials, CTA band
 - Open questions for next session: (1) the narrow-viewport tooling gap from the previous entry still stands — true 320–375px visual QA has not happened in this environment. (2) `.screenshots/session-b-visual-pass/` holds spot-check screenshots from this session, not an exhaustive baseline/comparison set — a full `web-design-law` Phase 4 two-pass screenshot run (390/1440 plus a Lighthouse pass) has not been done and should happen before this is shown to the client. (3) The `.next` corruption above is a reminder not to run `npm run build` and `npm run dev` concurrently against the same directory in future sessions.
+
+### CLAUDE.md housekeeping (via `/doctor`) — 2026-07-28
+- What was built: a `/doctor` health-check pass over the Claude Code setup (global tool config, not app code) found that this project's `CLAUDE.md` Architecture section was 9 lines of pure directory/file enumeration — route groups, component subdirectory listings, content-file names — all trivially derivable by a fresh session via `ls`/`find`, costing real resident context every session for zero information a session couldn't get itself in one tool call. Removed those 9 lines; kept the one Architecture bullet that explains genuinely non-obvious behaviour (`app/actions/appointment.ts`'s no-JS Server Action mechanism, in-memory rate limiting, and the `RESEND_API_KEY` requirement), since that's not discoverable without reading and understanding the code.
+- Decisions made / deviations from SPEC.md (and why): none — this is a documentation-only change to the project's own operating manual, not to the spec or any shipped page. Not a numbered build step; logged here for continuity since it changes a file every future session reads.
+- Verified: diff reviewed before committing — confirmed it removed exactly the 9 enumerable lines and nothing else; `CLAUDE.md`'s Hard rules, Commands, Session discipline, and spec-pointer sections are untouched.
+- Commit: `docs: trim derivable directory listing from CLAUDE.md Architecture section` (`1205b3a`)
+- Open questions for next session: none from this change. All open items from the Session B entry above still stand.
