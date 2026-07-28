@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-9 (Hero micro-trust row update)
+10 (Home page premium visual pass — planning + reduced-motion fix)
 
 ## Current step
-Hero micro-trust row updated to lead with the Google rating, sourced from clinic.googleRating — site otherwise unchanged since Session 8
+Plan for the home-page visual pass written and approved (8 items), but **held pending an updated SPEC.md §5.2/§5.3 token section from the client**. Nothing from that plan is implemented yet. Shipped this session: a confirmed `prefers-reduced-motion` accessibility fix, and 30 baseline screenshots for the pending token change.
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -18,6 +18,7 @@ Hero micro-trust row updated to lead with the Google rating, sourced from clinic
 - [x] Session 7 — Hero headline copy change — completed 2026-07-19
 - [x] Session 8 — Home page About us teaser + section reorder — completed 2026-07-19
 - [x] Session 9 — Hero micro-trust row update — completed 2026-07-19
+- [ ] Session 10 — Home page premium visual pass (plan approved; blocked on client token spec) — reduced-motion fix shipped 2026-07-28
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -245,3 +246,13 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npx tsc --noEmit` clean. Live check on this session's dev server: raw page text confirmed the row reads `4.8★ (240+ Google reviews) · Same-day appointments · Digital X-ray` directly below the hero CTAs. At 375px, wrap measured via the DOM Range API (same method used for the earlier headline check, since this sandbox's screenshot tool is unreliable): the row wraps to 2 lines at a clean word boundary (`"...Same-day "` / `"appointments · Digital X-ray"`), no mid-word break, no horizontal overflow (`body.scrollWidth === body.clientWidth`).
 - Commit: Hero micro-trust row update: content/home.ts, page.tsx
 - Open questions for next session: none from this change.
+
+### Reduced-motion fix: `.reveal` was never disabled — 2026-07-28
+- What was built: a one-rule fix in `app/globals.css` closing a real accessibility defect that had been present since Step 12. The `@layer base` reduced-motion block sets `animation-duration: 0.01ms !important` on `*`, which is the correct shape for time-driven animations but has **no effect whatsoever** on a scroll-driven one: `.reveal` uses `animation-timeline: view()`, so its progress comes from scroll position, not elapsed time. The 12px rise and opacity fade therefore still ran in full for every user who had asked for no motion — violating SPEC §5.4 ("all motion wrapped in `prefers-reduced-motion` overrides that disable transform and animation") and the §14 acceptance line ("`prefers-reduced-motion` disables all transforms and animations"), both of which had been signed off as passing. Fix adds a `@media (prefers-reduced-motion: reduce)` block **inside** the existing `@supports (animation-timeline: view())` block, setting `.reveal { animation: none; opacity: 1; transform: none }` — no `!important`, since it sits in the same layer at the same specificity and later in source order than the rule it overrides. Also corrected the comment above the block, which claimed reduced-motion "disables it everywhere." Separately, `.screenshots/` added to `.gitignore` (per the `web-design-law` screenshot procedure) — no screenshots are tracked.
+- Decisions made / deviations from SPEC.md (and why):
+  - **Tried the tidier fix first; it does not work.** Adding `animation-timeline: auto !important` to the existing global `*` block looks like the root-cause fix — reset the timeline and the `0.01ms` duration should finally apply. Measured in-browser: the computed timeline *did* reset to `auto`, but the element stayed at `opacity: 0` with `translateY(12px)` intact. Overriding the end state directly is the only reliable route. Both dead ends are recorded in the CSS comment so this isn't re-derived later.
+  - **`.header-border` deliberately left alone**, despite having the identical flaw (it is also scroll-driven, via `animation-timeline: scroll()`). It animates `border-bottom-color` only — not vestibular motion — and disabling it would permanently show a border that is meant to appear on scroll, i.e. a visible change to header chrome, which was explicitly out of scope this session. A strict reading of §5.4 says fix it; flagged for a decision rather than changed silently.
+  - Committed to `main` rather than a feature branch: `globals.css` is shared with the in-flight `about-page` worktree, so `main` is where both worktrees can inherit it from. Creating a third branch for a one-rule fix would have made the existing merge story worse.
+- Verified: mechanism proven **before** writing the rule (injecting the same declarations took hidden `.reveal` elements from 12 → 0). After the edit: the rule is present in the served CSS and correctly nested (`CSSSupportsRule((animation-timeline: view())) > CSSMediaRule((prefers-reduced-motion: reduce))`, walked via CSSOM); forcing that media rule's condition to match took hidden elements 12 → 0 while leaving them at 12 normally. `npm run build` clean across all 20 routes; rule survived minification intact (`@media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}`). Note: the condition was forced via CSSOM rather than true media emulation — the available chrome-devtools tooling exposes `colorScheme` but not `prefers-reduced-motion`.
+- Commit: Fix prefers-reduced-motion not disabling the scroll-reveal animation
+- Open questions for next session: (1) `.header-border` decision above. (2) **Full-page screenshots of this site are unreliable by default** — all 12 `.reveal` elements sit at `opacity: 0` below the fold, so a naive `fullPage` capture renders most of every page blank. The 30 baselines in `.screenshots/session-a-token-baseline/` (10 routes × 375/768/1024) were re-taken with an injected override neutralising `.reveal`; every future visual pass must use the same override or before/after comparisons are meaningless. (3) Measurement while capturing those baselines **disproved** a predicted defect — the Cost Clarity price range does *not* wrap at 768px (every row renders on one line); the real 768px problem is the note column collapsing to 211px / 6–7 lines. (4) A 0.91px horizontal overflow exists at exactly 768px from the desktop nav — invisible now, but it means the nav has zero slack, so it must be re-checked immediately after any typeface change.

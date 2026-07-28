@@ -33,7 +33,7 @@
    (`animation-timeline: view()`) gives the same "fires once as the element
    enters the viewport" behaviour without JS, following the same pattern as
    the header border above. Unsupported browsers show content immediately,
-   and prefers-reduced-motion (below) disables it everywhere. */
+   and the reduced-motion override below disables it everywhere. */
 @layer components {
   .reveal {
     opacity: 1;
@@ -47,6 +47,28 @@
       animation: reveal-in linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 40%;
+    }
+
+    /* §5.4 / §14 — reduced motion must disable this, and the global block in
+       @layer base does NOT: it sets `animation-duration: 0.01ms`, which a
+       scroll-driven animation ignores outright. `animation-timeline: view()`
+       derives progress from scroll position rather than elapsed time, so the
+       fade and the 12px rise both still ran for users who had asked for no
+       motion. Verified in-browser: forcing that duration onto a `.reveal`
+       element computes to 1e-05s while opacity stays 0 and getAnimations()
+       still reports a running ViewTimeline.
+
+       Resetting `animation-timeline: auto` is not sufficient either — also
+       verified: the timeline resets but the element stays at opacity 0.
+       Overriding the end state directly is the only reliable fix. No
+       `!important` needed: same layer, same specificity, later source order
+       than the rule above. */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
     }
   }
 }
