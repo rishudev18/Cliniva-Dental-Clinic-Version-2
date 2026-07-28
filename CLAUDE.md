@@ -18,7 +18,7 @@ Dental clinic marketing site. Full spec lives in `dental-clinic-website-spec.md`
 
 ## Architecture
 - `app/(site)/` — the main marketing route group: home, about, pricing, contact, services, services/[slug], smile-gallery, thank-you, privacy. `app/book/` is a separate route with its own minimal layout (no full header/footer chrome).
-- `app/actions/appointment.ts` — the Server Action backing `AppointmentForm`.
+- `app/actions/appointment.ts` — the Server Action backing `AppointmentForm`. Real `"use server"` Server Action, so the form still POSTs and works with JS disabled. Validates with `lib/schema.ts` (zod), enforces an in-memory per-IP rate limit (3 submissions / 10 min — no external store, per Hard rule 5), and has a honeypot field. Sends the notification email via Resend, which requires `RESEND_API_KEY` (copy `.env.example` to `.env.local`); without it the action still validates/rate-limits but always returns the WhatsApp-fallback error message instead of sending.
 - `components/layout/` — Header, Footer, MobileNav, StickyMobileCta, SkipLink.
 - `components/blocks/` — page-section building blocks (CostClarityTable, CtaBand, DoctorCard, FaqAccordion, IncludedExtra, MapEmbed, ServiceCard, TestimonialCard, TrustBar).
 - `components/forms/` — AppointmentForm, FormField.
