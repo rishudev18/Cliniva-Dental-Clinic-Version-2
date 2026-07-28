@@ -17,16 +17,7 @@ Dental clinic marketing site. Full spec lives in `dental-clinic-website-spec.md`
 5. No dependencies beyond the allowed list in the spec §2.2. If you think you need something else, stop and ask first.
 
 ## Architecture
-- `app/(site)/` — the main marketing route group: home, about, pricing, contact, services, services/[slug], smile-gallery, thank-you, privacy. `app/book/` is a separate route with its own minimal layout (no full header/footer chrome).
 - `app/actions/appointment.ts` — the Server Action backing `AppointmentForm`. Real `"use server"` Server Action, so the form still POSTs and works with JS disabled. Validates with `lib/schema.ts` (zod), enforces an in-memory per-IP rate limit (3 submissions / 10 min — no external store, per Hard rule 5), and has a honeypot field. Sends the notification email via Resend, which requires `RESEND_API_KEY` (copy `.env.example` to `.env.local`); without it the action still validates/rate-limits but always returns the WhatsApp-fallback error message instead of sending.
-- `components/layout/` — Header, Footer, MobileNav, StickyMobileCta, SkipLink.
-- `components/blocks/` — page-section building blocks (CostClarityTable, CtaBand, DoctorCard, FaqAccordion, IncludedExtra, MapEmbed, ServiceCard, TestimonialCard, TrustBar).
-- `components/forms/` — AppointmentForm, FormField.
-- `components/ui/` — low-level primitives (Button, Chip, Container, SectionHeading, Breadcrumbs, StarRating).
-- `components/seo/JsonLd.tsx` — structured data injection.
-- `app/sitemap.ts`, `app/robots.ts`, `app/manifest.ts`, `app/opengraph-image.tsx`, `app/apple-icon.tsx`, `app/not-found.tsx` — SEO/metadata routes (Next.js file-convention APIs), built in the Step 11 SEO layer.
-- `content/*.ts` — one file per content domain (about, book, clinic, contact, cta, doctors, faqs, gallery, home, notFound, pricing, privacy, seo, services, servicesIndex, smileGallery, testimonials, thankYou, trust); this is the only place page copy is allowed to live (Hard rule 4).
-- `lib/` — `jsonld.ts`, `schema.ts`, `utils.ts`.
 
 ## Session discipline
 - Work only on the step(s) assigned for the current session — check `PROGRESS.md` for the current session number and step range.
