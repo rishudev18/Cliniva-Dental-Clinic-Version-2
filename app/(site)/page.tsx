@@ -140,7 +140,9 @@ export default function Home() {
           hero above is porcelain (default). */}
       <section className="bg-enamel py-12">
         <Container>
-          <TrustBar />
+          <div className="reveal">
+            <TrustBar />
+          </div>
         </Container>
       </section>
 
@@ -230,7 +232,7 @@ export default function Home() {
             lead={pricing.rangeNote}
             align="center"
           />
-          <div className="mt-10">
+          <div className="reveal mt-10">
             <CostClarityTable variant="condensed" />
           </div>
           <div className="mt-8 text-center">
@@ -260,7 +262,7 @@ export default function Home() {
       <section className="bg-enamel py-16 md:py-24 lg:py-32">
         <Container>
           <SectionHeading eyebrow="Testimonials" title="What patients say" />
-          <div className="mt-8 flex items-center gap-4">
+          <div className="reveal mt-8 flex items-center gap-4 rounded-card border border-graphite/15 bg-porcelain px-6 py-4">
             <span className="font-mono text-3xl font-medium text-scrub tabular-nums">
               {clinic.googleRating.value}
             </span>
@@ -313,8 +315,13 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 10 — Booking CTA band */}
-      <CtaBand heading={cta.heading} body={cta.body} />
+      {/* 10 — Booking CTA band. Wrapped in .reveal here (home-only) rather
+          than inside CtaBand itself, so the other four pages that render
+          this component (`/about`, `/pricing`, `/services/[slug]`,
+          `/smile-gallery`) are unaffected. */}
+      <div className="reveal">
+        <CtaBand heading={cta.heading} body={cta.body} />
+      </div>
 
       {/* 11 — Location strip — enamel; differs from the CTA band's scrub
           above it either way, chosen to continue the alternation read. */}
@@ -322,7 +329,7 @@ export default function Home() {
         <Container>
           <SectionHeading eyebrow="Visit us" title="Find the clinic" />
           <div className="reveal mt-10 grid gap-10 md:grid-cols-2 md:items-start">
-            <MapEmbed />
+            <MapEmbed tone="muted" />
             <div>
               <address className="not-italic text-graphite">
                 <p className="font-medium text-scrub">{clinic.name}</p>
