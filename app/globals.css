@@ -17,6 +17,21 @@
       animation-timeline: scroll();
       animation-range: 0 8px;
     }
+
+    /* §5.4 / §14 — same scroll-driven-animation flaw as `.reveal` below: the
+       global reduced-motion block in @layer base sets `animation-duration`,
+       which `animation-timeline: scroll()` ignores entirely. Cancelling the
+       animation alone is not enough here — the rule above has already set
+       `border-bottom-color: transparent`, so `animation: none` on its own
+       would leave reduced-motion users with a permanently invisible border.
+       Restoring the colour lands them on the same always-visible border that
+       browsers without scroll-timeline support already get. */
+    @media (prefers-reduced-motion: reduce) {
+      .header-border {
+        animation: none;
+        border-bottom-color: rgba(92, 110, 120, 0.18);
+      }
+    }
   }
 }
 
