@@ -16,6 +16,15 @@ import { formatINRRange } from "@/lib/utils";
 // the 6 primary treatments, no grouping — for the home page, /services and
 // service pages. Desktop renders a real table; on mobile the same rows
 // become stacked cards with the mono price kept most prominent.
+//
+// Identity pass (2026-07-28): the desktop table previously had an sr-only
+// thead — visually no structure at all. Column headers are now always
+// visible (mono, matching the eyebrow treatment used sitewide). The rinse
+// fill on the header row is reserved for exactly one table per page: the
+// condensed variant's only table, or the full variant's first category
+// group — repeating it on every group read as noise, not signature.
+// Breakpoint moved md:→lg:: at 768px the table's note column was
+// collapsing to ~211px running 6–7 lines, below readable measure.
 
 type CostClarityTableProps = { variant: "full" | "condensed" };
 
@@ -48,8 +57,11 @@ function DesktopRows({ group }: { group: Service[] }) {
   return (
     <>
       {group.map((service) => (
-        <tr key={service.slug} className="border-t border-graphite/20 first:border-t-0">
-          <th scope="row" className="py-5 pr-6 text-left align-top font-semibold text-scrub">
+        <tr
+          key={service.slug}
+          className="border-t border-graphite/20 transition duration-200 ease-clinic first:border-t-0 hover:bg-porcelain"
+        >
+          <th scope="row" className="py-5 pl-6 pr-6 text-left align-top font-semibold text-scrub">
             {service.name}
           </th>
           <td className="py-5 pr-6 align-top">
@@ -58,7 +70,7 @@ function DesktopRows({ group }: { group: Service[] }) {
           <td className="max-w-[34ch] py-5 pr-6 align-top text-sm text-graphite">
             {service.priceNote}
           </td>
-          <td className="py-5 text-right align-top">
+          <td className="py-5 pr-6 text-right align-top">
             <BookLink service={service} />
           </td>
         </tr>
@@ -90,16 +102,33 @@ function MobileCards({ group }: { group: Service[] }) {
   );
 }
 
-function GroupTable({ group, caption }: { group: Service[]; caption: string }) {
+function GroupTable({
+  group,
+  caption,
+  headerFill = false,
+}: {
+  group: Service[];
+  caption: string;
+  headerFill?: boolean;
+}) {
+  const headerCell = "py-3 font-mono text-eyebrow uppercase text-graphite";
   return (
     <table className="w-full border-collapse">
       <caption className="sr-only">{caption}</caption>
-      <thead className="sr-only">
-        <tr>
-          <th scope="col">Treatment</th>
-          <th scope="col">Price range</th>
-          <th scope="col">What determines the range</th>
-          <th scope="col">Book</th>
+      <thead>
+        <tr className={headerFill ? "bg-rinse" : undefined}>
+          <th scope="col" className={`${headerCell} pl-6 pr-6 text-left`}>
+            Treatment
+          </th>
+          <th scope="col" className={`${headerCell} pr-6 text-left`}>
+            Range
+          </th>
+          <th scope="col" className={`${headerCell} pr-6 text-left`}>
+            What moves the price
+          </th>
+          <th scope="col" className={`${headerCell} pr-6 text-right`}>
+            Book
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -112,11 +141,11 @@ function GroupTable({ group, caption }: { group: Service[]; caption: string }) {
 export function CostClarityTable({ variant }: CostClarityTableProps) {
   if (variant === "condensed") {
     return (
-      <div>
-        <div className="hidden rounded-well border bg-enamel px-6 shadow-soft md:block">
-          <GroupTable group={primaryServices} caption="Treatment price ranges" />
+      <div className="reveal">
+        <div className="hidden overflow-hidden rounded-well border bg-enamel shadow-soft lg:block">
+          <GroupTable group={primaryServices} caption="Treatment price ranges" headerFill />
         </div>
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <MobileCards group={primaryServices} />
         </div>
       </div>
@@ -132,7 +161,7 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
     .filter((g) => g.items.length > 0);
 
   return (
-    <div>
+    <div className="reveal">
       {/* The honest note above the table (§5.5) — 2 paragraphs on the full
           variant, since /pricing is the one place this gets the fuller
           explanation (§7.5); condensed uses elsewhere quote the shorter
@@ -144,18 +173,19 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
       </div>
 
       <div className="mt-8 space-y-10">
-        {groups.map((group) => (
+        {groups.map((group, i) => (
           <section key={group.category} aria-label={group.label}>
             <p className="font-mono text-eyebrow uppercase text-graphite">
               {group.label}
             </p>
-            <div className="mt-3 hidden rounded-well border bg-enamel px-6 shadow-soft md:block">
+            <div className="mt-3 hidden overflow-hidden rounded-well border bg-enamel shadow-soft lg:block">
               <GroupTable
                 group={group.items}
                 caption={`${group.label} — treatment price ranges`}
+                headerFill={i === 0}
               />
             </div>
-            <div className="mt-3 md:hidden">
+            <div className="mt-3 lg:hidden">
               <MobileCards group={group.items} />
             </div>
           </section>

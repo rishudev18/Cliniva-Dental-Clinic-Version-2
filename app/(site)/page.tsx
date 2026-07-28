@@ -82,8 +82,9 @@ export default function Home() {
 
   return (
     <main>
-      {/* 1 — Hero. LCP element; fades in once on load, nothing else animates. */}
-      <section className="hero-fade py-16 md:py-24">
+      {/* 1 — Hero. LCP element; fades in once on load, nothing else animates.
+          lg:py-32 completes §5.3's unbuilt desktop padding step (item 2b). */}
+      <section className="hero-fade py-16 md:py-24 lg:py-32">
         <Container className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
           <div className="md:w-3/5">
             <p className="font-mono text-eyebrow uppercase text-graphite">
@@ -109,8 +110,17 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="md:w-2/5">
-            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-well md:max-h-none">
+          {/* §5.1's one permitted gradient — a rinse→enamel wash behind the
+              image, previously spec'd but never built. -inset-4 (16px) sits
+              inside Container's 20px mobile padding, so it can't cause
+              horizontal overflow. shadow-raised on the frame itself is the
+              one other use of that token besides the CTA band (§5.3). */}
+          <div className="relative md:w-2/5">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-4 rounded-well bg-gradient-to-b from-rinse to-enamel"
+            />
+            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-well shadow-raised md:max-h-none">
               <Image
                 src="/images/hero-new-2.jpg"
                 alt="Close-up of a bright, healthy smile"
@@ -172,7 +182,7 @@ export default function Home() {
       </section>
 
       {/* 4 — Services */}
-      <section className="bg-enamel py-16 md:py-24">
+      <section className="bg-enamel py-16 md:py-24 lg:py-32">
         <Container>
           <SectionHeading eyebrow="Treatments" title="Popular treatments" />
           <div className="reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -209,18 +219,21 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 6 — Cost Clarity (condensed) */}
-      <section className="bg-enamel py-16 md:py-24">
+      {/* 6 — Cost Clarity (condensed). Centered heading + lg:py-32 — the
+          signature element gets more room and, along with the CTA band,
+          is one of only two centered sections on the page (§5.5). */}
+      <section className="bg-enamel py-16 md:py-24 lg:py-32">
         <Container>
           <SectionHeading
             eyebrow="Pricing"
             title="What treatment actually costs"
             lead={pricing.rangeNote}
+            align="center"
           />
           <div className="mt-10">
             <CostClarityTable variant="condensed" />
           </div>
-          <div className="mt-8">
+          <div className="mt-8 text-center">
             <SectionLink href="/pricing">See full price list</SectionLink>
           </div>
         </Container>
@@ -232,7 +245,7 @@ export default function Home() {
           <SectionHeading eyebrow="Our doctors" title="Meet the team" lead={home.teamIntro} />
           <div className="reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {doctors.map((doctor) => (
-              <DoctorCard key={doctor.slug} doctor={doctor} />
+              <DoctorCard key={doctor.slug} doctor={doctor} href={`/about#${doctor.slug}`} />
             ))}
           </div>
           <div className="mt-8">
@@ -241,10 +254,31 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* 8 — Testimonials */}
-      <section className="bg-enamel py-16 md:py-24">
+      {/* 8 — Testimonials. Aggregate rating promoted above the cards as a
+          mono stat block (item 4) — it's the strongest social proof on the
+          page and was previously a 14px line buried below the grid. */}
+      <section className="bg-enamel py-16 md:py-24 lg:py-32">
         <Container>
           <SectionHeading eyebrow="Testimonials" title="What patients say" />
+          <div className="mt-8 flex items-center gap-4">
+            <span className="font-mono text-3xl font-medium text-scrub tabular-nums">
+              {clinic.googleRating.value}
+            </span>
+            <div>
+              <StarRating rating={Math.round(clinic.googleRating.value)} />
+              <p className="mt-1 text-sm text-graphite">
+                {clinic.googleRating.count}+ Google reviews ·{" "}
+                <a
+                  href={clinic.googleRating.url}
+                  target="_blank"
+                  rel="noopener"
+                  className="font-medium text-clinic underline-offset-4 hover:underline"
+                >
+                  See all reviews
+                </a>
+              </p>
+            </div>
+          </div>
           <div className="reveal mt-10 -mx-5 flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 md:pb-0">
             {testimonials.slice(0, 3).map((testimonial) => (
               <div
@@ -255,21 +289,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="mt-8 flex items-center gap-3">
-            <StarRating rating={Math.round(clinic.googleRating.value)} />
-            <p className="text-sm text-graphite">
-              {clinic.googleRating.value} average from {clinic.googleRating.count}+ Google
-              reviews ·{" "}
-              <a
-                href={clinic.googleRating.url}
-                target="_blank"
-                rel="noopener"
-                className="font-medium text-clinic underline-offset-4 hover:underline"
-              >
-                See all reviews
-              </a>
-            </p>
-          </div>
         </Container>
       </section>
 
@@ -278,7 +297,7 @@ export default function Home() {
         <Container>
           <SectionHeading eyebrow="Questions" title="Frequently asked questions" />
           <JsonLd data={faqPageJsonLd(homeFaqs)} />
-          <div className="mt-10">
+          <div className="reveal mt-10">
             <FaqAccordion items={homeFaqs} idPrefix="home-faq" />
           </div>
           <p className="mt-6 text-sm text-graphite">
@@ -302,7 +321,7 @@ export default function Home() {
       <section className="bg-enamel py-16 md:py-24">
         <Container>
           <SectionHeading eyebrow="Visit us" title="Find the clinic" />
-          <div className="mt-10 grid gap-10 md:grid-cols-2 md:items-start">
+          <div className="reveal mt-10 grid gap-10 md:grid-cols-2 md:items-start">
             <MapEmbed />
             <div>
               <address className="not-italic text-graphite">

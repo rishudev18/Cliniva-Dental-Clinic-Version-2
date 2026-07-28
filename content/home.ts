@@ -9,8 +9,13 @@ export type Differentiator = { icon: string; title: string; body: string };
 
 export const home = {
   hero: {
-    // Benefit statement, not the clinic name (§7.1).
-    headline: "Transform your smile. Transform your confidence.",
+    // Benefit statement, not the clinic name (§7.1). Revised 2026-07-28 —
+    // leads with the specialist-team fact (checkable, sets up the About
+    // teaser and Meet the team sections below) and puts the locality in
+    // the h1, which the previous headline didn't (§9.5/§14 miss). The lead
+    // paragraph already carries sterilisation/pricing/same-day, so this
+    // deliberately doesn't repeat them.
+    headline: "Four specialist dentists in DLF Phase 2, not one generalist.",
     lead: "Four specialist doctors, sterilised instruments opened in front of you, and a written price range before any treatment starts. Same-day appointments for pain, seven days a week.",
     // The rating item (e.g. "4.8★ (240+ Google reviews)") isn't listed here —
     // it's built in page.tsx from clinic.googleRating, the same source the
