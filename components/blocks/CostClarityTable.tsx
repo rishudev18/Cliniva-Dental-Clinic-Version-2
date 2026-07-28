@@ -71,7 +71,7 @@ function MobileCards({ group }: { group: Service[] }) {
   return (
     <ul className="space-y-3">
       {group.map((service) => (
-        <li key={service.slug} className="rounded-card border bg-enamel p-5 shadow-card">
+        <li key={service.slug} className="rounded-card border bg-enamel p-5 shadow-soft">
           <div className="flex items-baseline justify-between gap-4">
             <p className="font-semibold text-scrub">{service.name}</p>
             <BookLink service={service} />
@@ -113,7 +113,7 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
   if (variant === "condensed") {
     return (
       <div>
-        <div className="hidden rounded-card border bg-enamel px-6 shadow-card md:block">
+        <div className="hidden rounded-well border bg-enamel px-6 shadow-soft md:block">
           <GroupTable group={primaryServices} caption="Treatment price ranges" />
         </div>
         <div className="md:hidden">
@@ -149,7 +149,7 @@ export function CostClarityTable({ variant }: CostClarityTableProps) {
             <p className="font-mono text-eyebrow uppercase text-graphite">
               {group.label}
             </p>
-            <div className="mt-3 hidden rounded-card border bg-enamel px-6 shadow-card md:block">
+            <div className="mt-3 hidden rounded-well border bg-enamel px-6 shadow-soft md:block">
               <GroupTable
                 group={group.items}
                 caption={`${group.label} — treatment price ranges`}

@@ -113,8 +113,13 @@
   }
 }
 
-/* Typography base styles per SPEC §5.2. h1/h2 are Newsreader (display);
-   h3 down stays Public Sans. Body leading 1.65. */
+/* Typography base styles per SPEC §5.2. h1/h2/h3 and body all resolve to
+   Plus Jakarta Sans (`--font-sans`, §5.2 revision 2026-07-28) — the
+   `font-family: var(--font-display)` line below is a no-op in practice
+   post-swap (display and body are the same font now), kept explicit for
+   readability rather than relying on inheritance from <body>. Sizes,
+   weights, tracking, and leading are unchanged — this was a typeface swap
+   only, not a scale change. Body leading 1.65. */
 @layer base {
   body {
     line-height: 1.65;
@@ -122,7 +127,7 @@
 
   h1,
   h2 {
-    font-family: var(--font-display), serif;
+    font-family: var(--font-display), sans-serif;
     font-weight: 500;
   }
 

@@ -136,7 +136,7 @@ export default async function ServiceDetail({
       {/* 3 — "You may need this if" */}
       <section className="pb-16 md:pb-24">
         <Container>
-          <div className="rounded-card border bg-enamel p-8 shadow-card">
+          <div className="rounded-card border bg-enamel p-8 shadow-soft">
             <p className="font-mono text-eyebrow uppercase text-graphite">
               You may need this if
             </p>

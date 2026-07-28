@@ -46,7 +46,7 @@ export default async function BookPage({
           ))}
         </ul>
 
-        <div className="mt-10 rounded-card border bg-enamel p-6 shadow-card md:p-8">
+        <div className="mt-10 rounded-card border bg-enamel p-6 shadow-soft md:p-8">
           <AppointmentForm defaultTreatment={treatment} />
         </div>
 

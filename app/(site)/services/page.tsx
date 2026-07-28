@@ -61,7 +61,7 @@ export default function ServicesIndex() {
 
               {/* "Not sure what you need?" band — between general and cosmetic (§7.2) */}
               {i === 0 && (
-                <div className="reveal mt-12 rounded-card border bg-enamel p-8 shadow-card md:flex md:items-center md:justify-between md:gap-8">
+                <div className="reveal mt-12 rounded-card border bg-enamel p-8 shadow-soft md:flex md:items-center md:justify-between md:gap-8">
                   <div>
                     <h3 className="text-scrub">Not sure what you need?</h3>
                     <p className="mt-2 max-w-[50ch] text-graphite">

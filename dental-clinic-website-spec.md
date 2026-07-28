@@ -240,13 +240,14 @@ Semantic (states only, never decorative): `success #2E7D57`, `error #B23B3B`, `w
 
 ### 5.2 Typography
 
+**Revision (2026-07-28):** Newsreader retired. Plus Jakarta Sans replaces it and takes over both the display and body roles — this was a typeface swap only, not a scale change; sizes, tracking, and leading below are unchanged from the original spec.
+
 | Role | Face | Weights | Usage |
 |---|---|---|---|
-| Display | **Newsreader** (serif) | 400, 500 | h1, h2, doctor names, pull quotes |
-| Body | **Public Sans** | 400, 500, 600 | h3–h6, all body copy, buttons, nav |
+| Display + Body | **Plus Jakarta Sans** (variable, self-hosted via `next/font/google`) | 400, 500, 600, 700 | h1–h6, all body copy, buttons, nav, doctor names, pull quotes |
 | Utility | **IBM Plex Mono** | 400, 500 | Eyebrow labels, prices, durations, hours, stat numbers |
 
-The serif/mono pairing is the personality of this site. A clinic that publishes its prices in a precise monospaced figure reads as one with nothing to hide — that is the whole point. Use the mono face deliberately and sparingly: it appears only where a *number or a fact* is being stated.
+The site is now unified under one soft rounded sans-serif face, with the mono face reserved for the same role as before — it appears only where a *number or a fact* is being stated, which is what still makes the Cost Clarity table read as a clinic with nothing to hide.
 
 **Type scale** (mobile → desktop, `clamp()`):
 
@@ -263,11 +264,25 @@ The serif/mono pairing is the personality of this site. A clinic that publishes 
 Max line length for body copy: **68 characters** (`max-w-[68ch]`).
 
 ### 5.3 Spacing, radius, elevation
+
+**Revision (2026-07-28):** the radius and shadow ramp below replaces the original 3-radius/2-shadow system. Token names are semantic, not value-based (`rounded-well`, not `rounded-16`), so a grep for anything outside this list still enforces Hard rule 3.
+
 - Spacing scale: `4, 8, 12, 16, 24, 32, 48, 64, 96, 128` px only.
 - Section vertical padding: `py-16` mobile, `py-24` tablet, `py-32` desktop.
 - Container: `max-w-6xl mx-auto px-5 md:px-8`.
-- Radius: `4px` (inputs, small chips), `12px` (cards), `999px` (pills and buttons). Nothing else.
-- Shadows: exactly two — `shadow-card` (`0 1px 3px rgba(11,43,60,0.06), 0 8px 24px rgba(11,43,60,0.05)`) and `shadow-lift` on hover (`0 2px 6px rgba(11,43,60,0.08), 0 16px 40px rgba(11,43,60,0.08)`). Never on anything that isn't a card or a dropdown.
+- Radius — four tokens, nothing else:
+  | Token | Value | Role |
+  |---|---|---|
+  | `rounded-soft` | `8px` | Small elements: chips, tags, form inputs |
+  | `rounded-card` | `12px` | Treatment cards, testimonial cards, generic content cards |
+  | `rounded-well` | `16px` | Doctor cards, the pricing table container, the hero image frame |
+  | `rounded-pill` | `9999px` | Buttons, badges |
+- Shadows — three tokens, nothing else:
+  | Token | Value | Role |
+  |---|---|---|
+  | `shadow-soft` | `0 1px 3px rgba(11,43,60,0.06), 0 8px 24px rgba(11,43,60,0.05)` | Subtle ambient shadow — resting state for all cards |
+  | `shadow-lift` | `0 2px 6px rgba(11,43,60,0.08), 0 16px 40px rgba(11,43,60,0.08)` | Hover elevation — cards, doctor cards, testimonial cards on hover |
+  | `shadow-raised` | `0 4px 10px rgba(11,43,60,0.10), 0 24px 56px rgba(11,43,60,0.12)` | Deliberate one-off emphasis — hero image, CTA band only, not reused elsewhere |
 - Borders: `1px solid rgba(92,110,120,0.18)`.
 
 ### 5.4 Motion
@@ -281,7 +296,7 @@ This is the one thing the site is remembered for. Most Indian dental clinic webs
 
 A full-width table on `/pricing`, repeated in condensed form on the home page and on each service page:
 
-- Rows: treatment name (Public Sans 600) · price range (IBM Plex Mono, tabular numerals, `₹8,000 – ₹15,000`) · what determines the range (small graphite text) · a `Book` link.
+- Rows: treatment name (body face, 600) · price range (IBM Plex Mono, tabular numerals, `₹8,000 – ₹15,000`) · what determines the range (small graphite text) · a `Book` link.
 - Grouped by category with mono eyebrow headers.
 - Above the table, a short honest note explaining *why* it is a range, not a fixed price.
 - Below it, two short columns: **What's included** and **What costs extra** — plain, unhedged language.
@@ -337,7 +352,7 @@ Sections in exact order:
 
 6. **Cost Clarity** (condensed) — h2 `What treatment actually costs`, one honest paragraph, `CostClarityTable variant="condensed"` showing the 6 primary treatments, then `See full price list →`.
 
-7. **Meet the team** — h2, one-line intro, then a row of 4 compact `DoctorCard`s (photo, name in Newsreader, qualifications + registration number in mono, primary speciality chip). `More about our doctors →` links to `/about`.
+7. **Meet the team** — h2, one-line intro, then a row of 4 compact `DoctorCard`s (photo, name in the display face, qualifications + registration number in mono, primary speciality chip). `More about our doctors →` links to `/about`.
 
 8. **Testimonials** — h2, 3 cards on desktop / horizontal scroll-snap on mobile, plus the aggregate Google rating with a link to the Google reviews page.
 
@@ -571,7 +586,7 @@ The build is done when every one of these is true.
 **Design**
 - [ ] No color outside the six tokens plus the three semantic states
 - [ ] No gradient other than the single permitted hero wash
-- [ ] Only the two defined shadows and three radii are used
+- [ ] Only the defined shadow and radius tokens are used (§5.3 revision, 2026-07-28: three shadows, four radii)
 - [ ] Mono face appears only on numbers, labels, and factual data
 - [ ] Section backgrounds alternate; no two identical adjacent bands
 - [ ] Nothing breaks between 320px and 1920px

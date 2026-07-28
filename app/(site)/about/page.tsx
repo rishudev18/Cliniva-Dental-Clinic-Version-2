@@ -77,7 +77,7 @@ export default function AboutPage() {
             {about.sterilisation.points.map((point, i) => {
               const Icon = sterilisationIcons[i];
               return (
-                <div key={point.title} className="rounded-card border bg-enamel p-6 shadow-card">
+                <div key={point.title} className="rounded-card border bg-enamel p-6 shadow-soft">
                   <div className="flex h-11 w-11 items-center justify-center rounded-pill bg-rinse">
                     <Icon className="h-5 w-5 text-scrub" aria-hidden="true" />
                   </div>

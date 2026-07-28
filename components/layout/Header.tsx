@@ -24,24 +24,27 @@ export function Header() {
           </span>
         </Link>
 
-        {/* Desktop nav — §3.2 (nav revision): Home · About · Services (dropdown) · Smile Gallery · Contact */}
+        {/* Desktop nav — §3.2 (nav revision): Home · About · Services (dropdown) · Smile Gallery · Contact.
+            Link padding is px-3, not the site's usual px-4 — with Public Sans this row had 0.91px of
+            slack at exactly 768px; Plus Jakarta Sans (§5.2 revision) is wider and turned that into real
+            18px overflow. px-3 was the smallest change that restored margin at 768px. */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           <Link
             href="/"
-            className="rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+            className="rounded-pill px-3 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
           >
             Home
           </Link>
           <Link
             href="/about"
-            className="rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+            className="rounded-pill px-3 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
           >
             About
           </Link>
           <div className="group relative">
             <Link
               href="/services"
-              className="flex items-center gap-1 rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+              className="flex items-center gap-1 rounded-pill px-3 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
             >
               Services
               <ChevronDown
@@ -79,7 +82,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-pill px-4 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
+              className="rounded-pill px-3 py-2 font-medium text-scrub transition duration-200 ease-clinic hover:text-clinic"
             >
               {link.label}
             </Link>

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-// Server Component. Eyebrow (mono) + heading (Newsreader via base styles)
+// Server Component. Eyebrow (mono) + heading (display face via base styles)
 // + optional lead paragraph, per SPEC §6. Carries the `.reveal` scroll-in
 // treatment (§5.4) so every section heading gets it automatically.
 

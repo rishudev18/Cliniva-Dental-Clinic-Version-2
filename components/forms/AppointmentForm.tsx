@@ -17,7 +17,7 @@ import { whatsappUrl } from "@/lib/utils";
 const initialState: AppointmentFormState = { status: "idle" };
 
 const inputClass =
-  "w-full rounded-sm border bg-enamel px-4 py-3 text-scrub transition duration-200 ease-clinic focus:border-clinic";
+  "w-full rounded-soft border bg-enamel px-4 py-3 text-scrub transition duration-200 ease-clinic focus:border-clinic";
 
 type AppointmentFormProps = {
   /** Preselects the Treatment field — used by /book?treatment=slug (§7.3 sec 9). */

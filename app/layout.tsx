@@ -1,26 +1,23 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { IBM_Plex_Mono, Newsreader, Public_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { seo } from "@/content/seo";
 import { dentistJsonLd, siteUrl } from "@/lib/jsonld";
 import "./globals.css";
 
-// Weight 500 only — every `font-display` usage across the site (h1/h2 base
-// styles, DoctorCard, Header/Footer/MobileNav clinic name) is `font-medium`;
-// weight 400 was never actually rendered anywhere (§11 "preloaded subset").
-const newsreader = Newsreader({
+// §5.2 revision (2026-07-28) — Plus Jakarta Sans replaces Newsreader and
+// Public Sans both, one variable font serving the display and body roles
+// that used to be two separate faces (see the `fontFamily` comment in
+// tailwind.config.ts for how `font-display`/`font-body` both resolve here
+// without touching every call site). Weight 700 is loaded even though no
+// current usage needs it above 600 — kept for headroom, since the client
+// specified the full 400/500/600/700 set.
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const publicSans = Public_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-body",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -61,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
-      className={`${newsreader.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
+      className={`${plusJakartaSans.variable} ${ibmPlexMono.variable}`}
     >
       <body className="bg-porcelain font-body text-scrub antialiased">
         <JsonLd data={dentistJsonLd()} />

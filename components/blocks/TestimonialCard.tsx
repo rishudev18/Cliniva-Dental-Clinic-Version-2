@@ -8,7 +8,7 @@ type TestimonialCardProps = { testimonial: Testimonial };
 
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <article className="flex h-full flex-col rounded-card border bg-enamel p-6 shadow-card">
+    <article className="flex h-full flex-col rounded-card border bg-enamel p-6 shadow-soft">
       <div className="flex items-center gap-3">
         <span
           aria-hidden="true"

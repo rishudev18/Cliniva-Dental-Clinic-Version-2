@@ -110,7 +110,7 @@ export default function Home() {
           </div>
 
           <div className="md:w-2/5">
-            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-card md:max-h-none">
+            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-well md:max-h-none">
               <Image
                 src="/images/hero-new-2.jpg"
                 alt="Close-up of a bright, healthy smile"
@@ -158,7 +158,7 @@ export default function Home() {
           </div>
 
           <div className="md:w-2/5">
-            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-card md:max-h-none">
+            <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-well md:max-h-none">
               <Image
                 src="/images/ChatGPT%20Image%20Jul%2019%2C%202026%2C%2001_42_49%20PM.png"
                 alt="Clivia Dental Clinic team and interior"

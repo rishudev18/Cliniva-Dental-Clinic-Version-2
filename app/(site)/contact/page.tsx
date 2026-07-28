@@ -39,7 +39,7 @@ export default function ContactPage() {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left — form */}
-          <div className="rounded-card border bg-enamel p-6 shadow-card md:p-8">
+          <div className="rounded-card border bg-enamel p-6 shadow-soft md:p-8">
             <h2 className="text-scrub">Request an appointment</h2>
             <div className="mt-6">
               <AppointmentForm />

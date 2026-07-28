@@ -12,7 +12,7 @@ export function IncludedExtra() {
     <div className="grid gap-6 md:grid-cols-2">
       <section
         aria-label="What's included"
-        className="rounded-card border bg-enamel p-6 shadow-card"
+        className="rounded-card border bg-enamel p-6 shadow-soft"
       >
         <h3 className="text-scrub">What&rsquo;s included</h3>
         <ul className="mt-4 space-y-3">
@@ -26,7 +26,7 @@ export function IncludedExtra() {
       </section>
       <section
         aria-label="What costs extra"
-        className="rounded-card border bg-enamel p-6 shadow-card"
+        className="rounded-card border bg-enamel p-6 shadow-soft"
       >
         <h3 className="text-scrub">What costs extra</h3>
         <ul className="mt-4 space-y-3">

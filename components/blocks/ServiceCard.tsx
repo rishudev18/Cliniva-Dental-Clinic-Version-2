@@ -45,7 +45,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-card border bg-enamel p-6 shadow-card transition duration-200 ease-clinic hover:-translate-y-0.5 hover:border-graphite/40 hover:shadow-lift"
+      className="group flex h-full flex-col rounded-card border bg-enamel p-6 shadow-soft transition duration-200 ease-clinic hover:-translate-y-0.5 hover:border-graphite/40 hover:shadow-lift"
     >
       <span className="flex h-12 w-12 items-center justify-center rounded-pill bg-rinse">
         <Icon className="h-6 w-6 text-scrub" aria-hidden="true" />

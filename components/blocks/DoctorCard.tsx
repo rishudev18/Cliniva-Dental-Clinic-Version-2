@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { Doctor } from "@/content/doctors";
 import { Chip } from "@/components/ui/Chip";
 
-// Server Component. Photo (4:5), name in Newsreader, qualifications in mono,
+// Server Component. Photo (4:5), name in the display face, qualifications in mono,
 // speciality chips, experience (§6). `compact` for the home page row (§7.1),
 // `full` adds the expanded bio for /about (§7.4).
 // No portraits supplied yet (§13) — labelled placeholder at the correct
@@ -22,9 +22,9 @@ export function DoctorCard({ doctor, variant = "compact" }: DoctorCardProps) {
   const full = variant === "full";
 
   return (
-    <article className="flex h-full flex-col rounded-card border bg-enamel p-5 shadow-card">
+    <article className="flex h-full flex-col rounded-well border bg-enamel p-5 shadow-soft">
       {/* Portrait */}
-      <div className="relative flex aspect-[4/5] flex-col items-center justify-center gap-2 overflow-hidden rounded-sm bg-rinse">
+      <div className="relative flex aspect-[4/5] flex-col items-center justify-center gap-2 overflow-hidden rounded-well bg-rinse">
         {doctor.photo ? (
           <Image
             src={doctor.photo}

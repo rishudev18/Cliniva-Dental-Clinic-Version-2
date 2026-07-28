@@ -56,7 +56,7 @@ export default function SmileGalleryPage() {
       <section className="pb-16 md:pb-24">
         <Container>
           {groups.length === 0 ? (
-            <div className="reveal rounded-card border bg-enamel p-10 text-center shadow-card">
+            <div className="reveal rounded-card border bg-enamel p-10 text-center shadow-soft">
               <p className="mx-auto max-w-[52ch] text-body-l text-graphite">
                 {smileGallery.emptyState}
               </p>
@@ -72,7 +72,7 @@ export default function SmileGalleryPage() {
                       return (
                         <div
                           key={entry.id}
-                          className="overflow-hidden rounded-card border bg-enamel shadow-card"
+                          className="overflow-hidden rounded-card border bg-enamel shadow-soft"
                         >
                           <div className="grid grid-cols-2 gap-px bg-porcelain">
                             <div className="flex aspect-square flex-col items-center justify-center gap-1 bg-rinse">
