@@ -1,4 +1,13 @@
 // Copy for /about (SPEC §7.4) that isn't modelled elsewhere.
+//
+// Deferred (2026-07-29): the clinic-story section currently renders as text
+// only — no image, matching spec §7.4 as written. Once a real or properly
+// licensed clinic/team photo exists (same content gap as the doctor
+// portraits and facility photos below), consider adding it alongside the
+// story paragraphs, similar to the home page's About-teaser layout
+// (app/(site)/page.tsx, "About us (teaser)" section). Not built now because
+// there is no photo to wire it to yet — see the placeholder-photo policy
+// note in content/doctors.ts.
 
 export const about = {
   lead: "Four dentists, one clinic, and a straightforward way of explaining what your teeth actually need.",

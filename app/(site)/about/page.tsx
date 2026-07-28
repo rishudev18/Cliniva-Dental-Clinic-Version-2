@@ -34,8 +34,14 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main>
-      {/* 1 — Clinic story */}
-      <section className="py-12 md:py-16">
+      {/* 1 — Clinic story. Always above the fold like the home page hero, so
+          it gets the same page-load `.hero-fade` rather than `.reveal` —
+          `.reveal`'s `animation-timeline: view()` is scroll-linked and meant
+          for content the user scrolls to, not content already on screen at
+          first paint. This was the only one of About's five sections with no
+          entry motion at all; sections 2–4 already carry `.reveal` and
+          TrustBar (section 5) carries it internally. */}
+      <section className="hero-fade py-12 md:py-16">
         <Container>
           <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "About", href: "/about" }]} />
           <h1 className="mt-4 text-scrub">
@@ -116,8 +122,13 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 6 — Booking CTA band */}
-      <CtaBand heading={cta.heading} body={cta.body} />
+      {/* 6 — Booking CTA band. Wrapped in .reveal here (page-local, same
+          pattern as the home page's own CtaBand call site) rather than
+          inside CtaBand itself, so /pricing, /services/[slug], and
+          /smile-gallery are unaffected. */}
+      <div className="reveal">
+        <CtaBand heading={cta.heading} body={cta.body} />
+      </div>
     </main>
   );
 }
