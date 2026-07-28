@@ -2,6 +2,14 @@
 // Registration numbers are plausible placeholders — replace with real
 // Dental Council numbers before launch. Photos are labelled placeholders
 // until portraits are supplied.
+//
+// Phase 4 review (2026-07-28): doc2_new.jpg and doc3_new.jpg were found to be
+// unlicensed Shutterstock preview images with a visible watermark baked into
+// the photo — a genuine defect (copyright risk, unprofessional on a live
+// medical site), not a design choice. Reverted those two doctors to `photo: ""`
+// so DoctorCard falls back to its existing labelled-placeholder branch. Do
+// not restore a `photo` value here without confirming the image is either a
+// real portrait or properly licensed stock with no watermark.
 
 export type Doctor = {
   slug: string;
@@ -38,7 +46,7 @@ export const doctors: Doctor[] = [
     specialities: ["Crowns & bridges", "Dental implants", "Dentures", "Smile design"],
     bio: "Dr. Mukherjee is a prosthodontist — a specialist in rebuilding and replacing teeth. Crowns, bridges, implants and dentures at Clivia go through him, from the first measurement to the final fit. His standard is simple: a replacement tooth should be something you stop noticing within a week.\n\nOver twelve years he has fitted everything from single crowns to full-arch rehabilitations. He is particular about materials and will explain exactly what the difference is between a metal, porcelain-fused and zirconia crown before you choose — including why the cheaper option is sometimes the right one.",
     registration: "A-23917, Haryana State Dental Council",
-    photo: "/images/doctors/doc2_new.jpg",
+    photo: "",
     languages: ["English", "Hindi", "Bengali"],
   },
   {
@@ -50,7 +58,7 @@ export const doctors: Doctor[] = [
     specialities: ["Braces", "Clear aligners", "Bite correction"],
     bio: "Dr. Singh is the clinic's orthodontist, with seventeen years of moving teeth into better positions. He treats children, teenagers and a growing number of adults who assumed braces were no longer an option for them. Metal braces, ceramic braces and clear aligners are all planned and monitored by him personally, visit to visit.\n\nHis first consultation is deliberately unhurried: photographs, measurements and a frank conversation about how long treatment will really take and what it will really cost. If a case does not need orthodontic treatment, he says so and sends you home.",
     registration: "A-15206, Haryana State Dental Council",
-    photo: "/images/doctors/doc3_new.jpg",
+    photo: "",
     languages: ["English", "Hindi", "Punjabi"],
   },
   {

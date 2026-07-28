@@ -169,12 +169,19 @@ export default function Home() {
             </div>
           </div>
 
+          {/* `priority` added in the Phase 4 review (2026-07-28): Next.js's
+              own runtime warning flagged this as the actual LCP element
+              (not the hero image above), since it was lazy-loaded and only
+              painted once loaded, by which point it was the largest element
+              on screen — that late paint was a real, measured contributor
+              to the site's LCP gap. */}
           <div className="md:w-2/5">
             <div className="relative aspect-[4/5] max-h-[280px] w-full overflow-hidden rounded-well md:max-h-none">
               <Image
-                src="/images/ChatGPT%20Image%20Jul%2019%2C%202026%2C%2001_42_49%20PM.png"
+                src="/images/clinic-reception.png"
                 alt="Clivia Dental Clinic team and interior"
                 fill
+                priority
                 sizes="(min-width: 768px) 40vw, 100vw"
                 className="object-cover"
               />
