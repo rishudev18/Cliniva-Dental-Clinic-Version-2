@@ -1,10 +1,10 @@
 # Progress Log
 
 ## Current session
-13 (Small cleanups: `clinic` color-hex drift fixed, two orphaned images deleted)
+14 (About page re-verification — no changes, confirmed Session 11 work still solid)
 
 ## Current step
-Session 13 closed two of the small, no-client-input-needed items from the punch list: the `#1C7BA8` vs `#1B79A5` `clinic`-color drift (flagged since Session A, never fixed) and the two orphaned image files flagged in the 2026-07-28 Phase 4 entry. See the Session 13 step-log entry for detail — notably, the drift turned out to affect a third file beyond the two originally flagged. Remaining open items are unchanged: doctor/facility photos, the About story-image slot, the font-preload upstream-bug re-check (needs a real deployment), and the full §13 client-input list.
+User asked to "start the About page premium visual pass" — clarified first, since Session 11 had already closed the motion-coverage gap and confirmed About inherited Home's Session 10 token/component restyle for free. Scoped down to what the user actually wanted: a re-verification pass only, no new changes. See the Session 14 step-log entry — everything checked out clean, nothing regressed. Remaining open items are unchanged: doctor/facility photos (client is sending both, facility expected the evening of 2026-07-29 per the client's own message), the About story-image slot, the font-preload upstream-bug re-check (needs a real deployment), and the full §13 client-input list.
 
 ## Session map
 (check off when the whole session is complete and verified)
@@ -22,6 +22,7 @@ Session 13 closed two of the small, no-client-input-needed items from the punch 
 - [x] Session 11 — About page targeted visual-consistency pass (motion-coverage fix, deferred-image documentation) + home page LCP re-check — completed 2026-07-29
 - [x] Session 12 — Font-preload investigation; identified as an upstream Next.js bug, no code fix applied — completed 2026-07-29
 - [x] Session 13 — `clinic` color-hex drift fix + orphaned image cleanup — completed 2026-07-29
+- [x] Session 14 — About page re-verification (no changes; confirmed Session 11's work still solid) — completed 2026-07-29
 
 ## Step log
 Append one entry per completed step. Never delete old entries — this file is the project's memory across sessions.
@@ -399,3 +400,15 @@ Append one entry per completed step. Never delete old entries — this file is t
 - Verified: `npx tsc --noEmit` and a clean `npm run build` (dev server stopped first, matching the established build/dev-conflict pattern from Sessions 11–12) both pass, 30 routes including `/icon.svg`, `/apple-icon`, `/opengraph-image` generating without error. Repo-wide grep for `1C7BA8` after the edits returns matches only inside `tailwind.config.ts`'s own historical comment (correctly describing the old spec value, not a live usage) — zero remaining live occurrences. Each of the three edited files individually grepped to confirm it now contains `1B79A5`. Dev server restarted and confirmed healthy (`200` on `/`) after the build.
 - Commit: `Fix clinic color-hex drift, delete two orphaned images` (`c698b3c`)
 - Open questions for next session: all unchanged from Session 12 — doctor/facility photos, the About story-image slot, the font-preload upstream-bug re-check (needs a real deployment), the full §13 client-input list, and the Google Rich Results Test / real-hosting Lighthouse re-check (both need a live URL).
+
+### Session 14 — About page re-verification, no changes — 2026-07-29
+- What was built: nothing. The user asked to "start the About page premium visual pass now," which echoed the original framing from before Session 11 existed. Clarified scope first rather than assuming: Session 11 had already closed the motion-coverage gap and confirmed `/about` inherited Session 10's token/component restyle automatically (shared `DoctorCard`/`CtaBand`/`TrustBar`), so a fresh "premium pass" would either be redundant or need a concrete reason to go further. The user confirmed they wanted a re-verification only — no new changes — so this session is a QA pass, not a build.
+  - DOM structure check (`evaluate_script`) confirmed both Session 11 changes are still present and correct: section 1 carries `hero-fade py-12 md:py-16` (not `.reveal`, per the above-the-fold reasoning from that session), and the CTA band is still wrapped in `<div className="reveal">`.
+  - Zero console messages (errors, warnings, or otherwise) at both viewports.
+  - Screenshot spot-checks at true 1440×900 and true 390×844 (top, mid-scroll through the doctor grid, and bottom through trust stats/CTA band/footer) — all clean, no layout breaks, no clipped text, doctor-card reserved-height treatment still holding across all four bios, CTA band fully opaque and correctly styled.
+  - `document.documentElement.scrollWidth === clientWidth` at 390px confirmed zero horizontal overflow.
+  - Noted for future sessions: `resize_page` didn't actually change the viewport this time (kept reporting 1440×900 despite requesting 390×844) — switched to `emulate` with an explicit `WxHxDPR,mobile,touch` viewport string instead, which worked correctly and matches what the 2026-07-28 reconciliation-pass entry already found to be the more reliable tool for this.
+- Decisions made / deviations from SPEC.md (and why): none — no code touched.
+- Verified: see the checks listed above. No `tsc`/build re-run since no source files changed.
+- Commit: (pending — next action after this entry, docs-only)
+- Open questions for next session: unchanged from Session 13 — doctor/facility photos (client sending both; facility expected evening of 2026-07-29), the About story-image slot, the font-preload upstream-bug re-check, the full §13 client-input list, and the Google Rich Results Test / real-hosting Lighthouse re-check.
