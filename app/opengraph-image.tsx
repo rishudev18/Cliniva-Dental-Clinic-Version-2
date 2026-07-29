@@ -31,7 +31,7 @@ export default function Image() {
             display: "flex",
             width: 64,
             height: 6,
-            backgroundColor: "#1C7BA8", // clinic
+            backgroundColor: "#1B79A5", // clinic
             marginBottom: 32,
           }}
         />

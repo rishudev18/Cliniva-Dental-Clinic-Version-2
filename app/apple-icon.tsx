@@ -30,7 +30,7 @@ export default function AppleIcon() {
             width: 20,
             height: 20,
             borderRadius: "50%",
-            backgroundColor: "#1C7BA8", // clinic
+            backgroundColor: "#1B79A5", // clinic
             display: "flex",
           }}
         />

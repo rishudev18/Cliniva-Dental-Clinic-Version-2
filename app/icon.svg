@@ -3,7 +3,7 @@
        labelled-placeholder pattern used for doctor portraits until a real
        logo exists. Uses only the §5.1 tokens: scrub, enamel, clinic. -->
   <rect width="32" height="32" rx="8" fill="#0B2B3C" />
-  <circle cx="24" cy="8" r="3" fill="#1C7BA8" />
+  <circle cx="24" cy="8" r="3" fill="#1B79A5" />
   <text
     x="13"
     y="22"
