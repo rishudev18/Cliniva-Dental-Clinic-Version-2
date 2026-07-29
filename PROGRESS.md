@@ -410,5 +410,5 @@ Append one entry per completed step. Never delete old entries — this file is t
   - Noted for future sessions: `resize_page` didn't actually change the viewport this time (kept reporting 1440×900 despite requesting 390×844) — switched to `emulate` with an explicit `WxHxDPR,mobile,touch` viewport string instead, which worked correctly and matches what the 2026-07-28 reconciliation-pass entry already found to be the more reliable tool for this.
 - Decisions made / deviations from SPEC.md (and why): none — no code touched.
 - Verified: see the checks listed above. No `tsc`/build re-run since no source files changed.
-- Commit: (pending — next action after this entry, docs-only)
+- Commit: `docs: log About page re-verification (no changes, Session 11 work confirmed solid)` (`085dc2b`)
 - Open questions for next session: unchanged from Session 13 — doctor/facility photos (client sending both; facility expected evening of 2026-07-29), the About story-image slot, the font-preload upstream-bug re-check, the full §13 client-input list, and the Google Rich Results Test / real-hosting Lighthouse re-check.
